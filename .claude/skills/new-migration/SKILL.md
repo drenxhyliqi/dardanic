@@ -13,6 +13,6 @@ description: Create a Supabase database migration for DARDANIC with RLS policies
 3. Never edit a migration that's already been applied/committed. Write a new one instead.
 4. Update `supabase/seed.sql` with a little realistic test data (no real personal data).
 5. Apply locally: `supabase db reset`. Fix any errors.
-6. Regenerate types: `supabase gen types typescript --local > packages/shared/types/database.ts`.
+6. Regenerate types: `supabase gen types typescript --local > apps/mobile/types/database.ts`.
 7. Run typecheck and fix anything the new types break.
 8. Explain the schema change and policies to the user in plain language.
