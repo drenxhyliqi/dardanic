@@ -2,7 +2,7 @@ import { Link, type Href } from 'expo-router';
 import { StyleSheet, Text } from 'react-native';
 
 import { strings } from '../../i18n';
-import { colors, typography } from '../../theme';
+import { makeStyles, typography } from '../../theme';
 import type { WelcomeMode } from './useModeSwitch';
 
 export type LegalNoticeProps = {
@@ -12,6 +12,7 @@ export type LegalNoticeProps = {
 // The legal line under the welcome buttons, with working links.
 // start: Terms + Privacy. signup: Terms + License Agreement + Privacy, naming the sign-up options.
 export function LegalNotice({ mode }: LegalNoticeProps) {
+  const styles = useStyles();
   const { legal } = strings;
 
   if (mode === 'start') {
@@ -40,6 +41,7 @@ export function LegalNotice({ mode }: LegalNoticeProps) {
 }
 
 function LegalLink({ href, label }: { href: Href; label: string }) {
+  const styles = useStyles();
   return (
     <Link href={href} style={styles.link}>
       {label}
@@ -47,14 +49,16 @@ function LegalLink({ href, label }: { href: Href; label: string }) {
   );
 }
 
-const styles = StyleSheet.create({
-  notice: {
-    ...typography.small,
-    color: colors.textMuted,
-    textAlign: 'left',
-  },
-  link: {
-    color: colors.text,
-    textDecorationLine: 'underline',
-  },
-});
+const useStyles = makeStyles((colors) =>
+  StyleSheet.create({
+    notice: {
+      ...typography.small,
+      color: colors.textMuted,
+      textAlign: 'left',
+    },
+    link: {
+      color: colors.text,
+      textDecorationLine: 'underline',
+    },
+  }),
+);

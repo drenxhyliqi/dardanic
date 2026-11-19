@@ -9,7 +9,7 @@ import { Button } from '../components/ui/Button';
 import { Heading } from '../components/ui/Heading';
 import { WelcomeImage } from '../components/welcome/WelcomeImage';
 import { strings } from '../i18n';
-import { colors, sizes, spacing } from '../theme';
+import { makeStyles, sizes, spacing, useColors } from '../theme';
 
 const logoMark = require('../assets/brand/logo-mark.png');
 const MARK_RATIO = 600 / 229;
@@ -20,8 +20,11 @@ const t = strings.plan;
 
 // Shown right after sign-up: pick Standard (preselected) or Professional (paid, for businesses).
 // Same photo background as the welcome screen, with everything sitting at the bottom.
-// Payments aren't connected yet: both plans continue into the app for now.
+// Standard continues to profile setup. Payments aren't connected yet, so
+// Professional goes straight into the app for now.
 export default function ChoosePlanScreen() {
+  const colors = useColors();
+  const styles = useStyles();
   const [plan, setPlan] = useState<Plan>('standard');
 
   return (
@@ -30,6 +33,7 @@ export default function ChoosePlanScreen() {
       <SafeAreaView style={styles.safe}>
         <Image
           source={logoMark}
+          tintColor={colors.text}
           style={styles.logo}
           resizeMode="contain"
           accessibilityLabel="DARDANIC"
@@ -60,7 +64,9 @@ export default function ChoosePlanScreen() {
 
           <Button
             label={plan === 'standard' ? t.continueStandard : t.continueProfessional}
-            onPress={() => router.replace('/home')}
+            onPress={() =>
+              plan === 'standard' ? router.push('/profile-setup') : router.replace('/feed')
+            }
             showArrow
             strong
           />
@@ -70,32 +76,34 @@ export default function ChoosePlanScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  safe: {
-    flex: 1,
-  },
-  logo: {
-    width: sizes.logoMarkSmall,
-    height: sizes.logoMarkSmall / MARK_RATIO,
-    marginTop: spacing.sm,
-    marginLeft: spacing.xl,
-  },
-  content: {
-    flexGrow: 1,
-    justifyContent: 'flex-end',
-    paddingHorizontal: spacing.xl,
-    paddingBottom: spacing.md,
-    gap: spacing.xl,
-  },
-  top: {
-    gap: spacing.lg,
-  },
-  plans: {
-    gap: spacing.md,
-    paddingTop: spacing.sm,
-  },
-});
+const useStyles = makeStyles((colors) =>
+  StyleSheet.create({
+    screen: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    safe: {
+      flex: 1,
+    },
+    logo: {
+      width: sizes.logoMarkSmall,
+      height: sizes.logoMarkSmall / MARK_RATIO,
+      marginTop: spacing.sm,
+      marginLeft: spacing.xl,
+    },
+    content: {
+      flexGrow: 1,
+      justifyContent: 'flex-end',
+      paddingHorizontal: spacing.xl,
+      paddingBottom: spacing.md,
+      gap: spacing.xl,
+    },
+    top: {
+      gap: spacing.lg,
+    },
+    plans: {
+      gap: spacing.md,
+      paddingTop: spacing.sm,
+    },
+  }),
+);

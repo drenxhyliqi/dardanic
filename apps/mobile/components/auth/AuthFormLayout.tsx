@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { colors, spacing } from '../../theme';
+import { makeStyles, spacing } from '../../theme';
 import { Heading } from '../ui/Heading';
 
 export type AuthFormLayoutProps = {
@@ -13,6 +13,7 @@ export type AuthFormLayoutProps = {
 
 // Shared layout for login-type forms: heading, then fields. Scrolls above the keyboard.
 export function AuthFormLayout({ title, subtitle, children }: AuthFormLayoutProps) {
+  const styles = useStyles();
   return (
     <SafeAreaView style={styles.screen} edges={['bottom', 'left', 'right']}>
       <ScrollView
@@ -28,18 +29,20 @@ export function AuthFormLayout({ title, subtitle, children }: AuthFormLayoutProp
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-  content: {
-    paddingHorizontal: spacing.xl,
-    paddingTop: spacing.lg,
-    paddingBottom: spacing.xl,
-    gap: spacing.xxl,
-  },
-  form: {
-    gap: spacing.lg,
-  },
-});
+const useStyles = makeStyles((colors) =>
+  StyleSheet.create({
+    screen: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    content: {
+      paddingHorizontal: spacing.xl,
+      paddingTop: spacing.lg,
+      paddingBottom: spacing.xl,
+      gap: spacing.xxl,
+    },
+    form: {
+      gap: spacing.lg,
+    },
+  }),
+);

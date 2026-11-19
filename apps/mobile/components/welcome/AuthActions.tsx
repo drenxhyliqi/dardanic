@@ -3,7 +3,7 @@ import { router } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { strings } from '../../i18n';
-import { colors, sizes, spacing, typography } from '../../theme';
+import { makeStyles, sizes, spacing, typography, useColors } from '../../theme';
 import { Button } from '../ui/Button';
 import { TextLink } from '../ui/TextLink';
 import type { WelcomeMode } from './useModeSwitch';
@@ -20,6 +20,8 @@ const finishSignup = () => router.replace('/choose-plan');
 // The welcome buttons. "Create account" swaps them for Apple / Google / email.
 // Apple / Google / email aren't connected yet: they skip ahead to the plan step for now.
 export function AuthActions({ mode, onChangeMode }: AuthActionsProps) {
+  const styles = useStyles();
+  const colors = useColors();
   if (mode === 'start') {
     return (
       <View style={styles.group}>
@@ -71,24 +73,26 @@ export function AuthActions({ mode, onChangeMode }: AuthActionsProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  group: {
-    gap: spacing.md,
-  },
-  back: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-    gap: spacing.xs,
-    paddingVertical: spacing.xs,
-  },
-  backLabel: {
-    ...typography.small,
-    color: colors.textMuted,
-  },
-  prompt: {
-    ...typography.paragraph,
-    color: colors.textMuted,
-    marginTop: spacing.xs,
-  },
-});
+const useStyles = makeStyles((colors) =>
+  StyleSheet.create({
+    group: {
+      gap: spacing.md,
+    },
+    back: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      alignSelf: 'flex-start',
+      gap: spacing.xs,
+      paddingVertical: spacing.xs,
+    },
+    backLabel: {
+      ...typography.small,
+      color: colors.textMuted,
+    },
+    prompt: {
+      ...typography.paragraph,
+      color: colors.textMuted,
+      marginTop: spacing.xs,
+    },
+  }),
+);

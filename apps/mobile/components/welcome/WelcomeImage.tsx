@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
 
-import { imageFade } from '../../theme';
+import { useColors } from '../../theme';
 
 const welcomeImage = require('../../assets/images/welcome.jpg');
 
@@ -11,10 +11,11 @@ export type WelcomeImageProps = {
 
 // The car photo across the top of the screen, fading into the background from the middle down.
 export function WelcomeImage({ style }: WelcomeImageProps) {
+  const colors = useColors();
   return (
     <Animated.View style={[styles.container, style]} pointerEvents="none">
       <Animated.Image source={welcomeImage} style={styles.image} resizeMode="cover" />
-      <View style={[StyleSheet.absoluteFill, { backgroundImage: imageFade }]} />
+      <View style={[StyleSheet.absoluteFill, { backgroundImage: colors.imageFade }]} />
     </Animated.View>
   );
 }

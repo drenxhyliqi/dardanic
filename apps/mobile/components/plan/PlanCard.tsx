@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Animated, Image, Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { colors, radius, sizes, spacing, typography } from '../../theme';
+import { makeStyles, radius, sizes, spacing, typography, useColors } from '../../theme';
 
 const flagPattern = require('../../assets/images/flag-fade.png');
 
@@ -30,6 +30,8 @@ export function PlanCard({
   badge,
   large = false,
 }: PlanCardProps) {
+  const colors = useColors();
+  const styles = useStyles();
   const focus = useRef(new Animated.Value(selected ? 1 : 0)).current;
 
   useEffect(() => {
@@ -61,7 +63,12 @@ export function PlanCard({
       >
         {flag && (
           <View style={styles.flag} pointerEvents="none">
-            <Image source={flagPattern} style={styles.flagImage} resizeMode="cover" />
+            <Image
+              source={flagPattern}
+              tintColor={colors.text}
+              style={styles.flagImage}
+              resizeMode="cover"
+            />
           </View>
         )}
         <View style={styles.text}>
@@ -81,81 +88,83 @@ export function PlanCard({
   );
 }
 
-const styles = StyleSheet.create({
-  card: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: spacing.lg,
-    padding: spacing.xl,
-    borderRadius: radius.lg,
-    borderWidth: 1.5,
-    borderColor: colors.surfaceBorder,
-    backgroundColor: colors.surface,
-    overflow: 'hidden',
-  },
-  flag: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    width: sizes.flagPattern,
-  },
-  flagImage: {
-    width: '100%',
-    height: '100%',
-  },
-  badge: {
-    position: 'absolute',
-    top: -spacing.md,
-    left: spacing.xl,
-    paddingHorizontal: spacing.sm + spacing.xxs,
-    paddingVertical: spacing.xs + spacing.xxs,
-    borderRadius: radius.sm,
-    backgroundColor: colors.primary,
-  },
-  badgeText: {
-    ...typography.badge,
-    color: colors.white,
-    textTransform: 'uppercase',
-  },
-  cardSelected: {
-    borderColor: colors.primary,
-  },
-  pressed: {
-    opacity: 0.9,
-  },
-  text: {
-    flex: 1,
-    gap: spacing.sm,
-  },
-  title: {
-    ...typography.cardTitle,
-    color: colors.text,
-    textTransform: 'uppercase',
-  },
-  titleLarge: {
-    fontSize: typography.cardTitle.fontSize * 1.5,
-  },
-  description: {
-    ...typography.paragraph,
-    color: colors.textMuted,
-  },
-  radio: {
-    width: sizes.radio,
-    height: sizes.radio,
-    borderRadius: radius.full,
-    borderWidth: 2,
-    borderColor: colors.surfaceBorder,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  radioSelected: {
-    borderColor: colors.primary,
-  },
-  radioDot: {
-    width: sizes.radio / 2,
-    height: sizes.radio / 2,
-    borderRadius: radius.full,
-    backgroundColor: colors.primary,
-  },
-});
+const useStyles = makeStyles((colors) =>
+  StyleSheet.create({
+    card: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.lg,
+      padding: spacing.xl,
+      borderRadius: radius.lg,
+      borderWidth: 1.5,
+      borderColor: colors.surfaceBorder,
+      backgroundColor: colors.surface,
+      overflow: 'hidden',
+    },
+    flag: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      bottom: 0,
+      width: sizes.flagPattern,
+    },
+    flagImage: {
+      width: '100%',
+      height: '100%',
+    },
+    badge: {
+      position: 'absolute',
+      top: -spacing.md,
+      left: spacing.xl,
+      paddingHorizontal: spacing.sm + spacing.xxs,
+      paddingVertical: spacing.xs + spacing.xxs,
+      borderRadius: radius.sm,
+      backgroundColor: colors.primary,
+    },
+    badgeText: {
+      ...typography.badge,
+      color: colors.white,
+      textTransform: 'uppercase',
+    },
+    cardSelected: {
+      borderColor: colors.primary,
+    },
+    pressed: {
+      opacity: 0.9,
+    },
+    text: {
+      flex: 1,
+      gap: spacing.sm,
+    },
+    title: {
+      ...typography.cardTitle,
+      color: colors.text,
+      textTransform: 'uppercase',
+    },
+    titleLarge: {
+      fontSize: typography.cardTitle.fontSize * 1.5,
+    },
+    description: {
+      ...typography.paragraph,
+      color: colors.textMuted,
+    },
+    radio: {
+      width: sizes.radio,
+      height: sizes.radio,
+      borderRadius: radius.full,
+      borderWidth: 2,
+      borderColor: colors.surfaceBorder,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    radioSelected: {
+      borderColor: colors.primary,
+    },
+    radioDot: {
+      width: sizes.radio / 2,
+      height: sizes.radio / 2,
+      borderRadius: radius.full,
+      backgroundColor: colors.primary,
+    },
+  }),
+);
