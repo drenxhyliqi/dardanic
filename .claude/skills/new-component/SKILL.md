@@ -14,3 +14,4 @@ description: Where DARDANIC components live, how to name them, type their props 
 - **Text:** no literal strings; take text via props or from `strings` (`apps/mobile/i18n`).
 - **Size:** keep under ~150 lines; split sub-parts into their own files.
 - **Pure UI:** components don't fetch data. Data lives in hooks; screens connect the two.
+- **Theme:** styles that use colours go through `makeStyles((colors) => StyleSheet.create({...}))` + `const styles = useStyles()`; inline colours via `useColors()`. Check the screen in both Light and Dark (Settings → Theme).
