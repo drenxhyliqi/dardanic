@@ -6,7 +6,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "dark",
+    "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true
     },
@@ -28,10 +28,22 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/brand/logo-mark.png",
+          "image": "./assets/brand/logo-mark-dark.png",
           "imageWidth": 120,
           "resizeMode": "contain",
-          "backgroundColor": "#080B12"
+          "backgroundColor": "#F7F4ED",
+          "dark": {
+            "image": "./assets/brand/logo-mark.png",
+            "backgroundColor": "#080B12"
+          }
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow DARDANIC to access your photos so you can add a profile photo and banner.",
+          "cameraPermission": false,
+          "microphonePermission": false
         }
       ]
     ]
