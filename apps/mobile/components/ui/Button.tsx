@@ -2,7 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import type { ComponentProps } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
-import { colors, radius, sizes, spacing, typography } from '../../theme';
+import { radius, sizes, spacing, typography, useColors, type Palette } from '../../theme';
 
 type IconName = ComponentProps<typeof Ionicons>['name'];
 
@@ -17,11 +17,15 @@ export type ButtonProps = {
   strong?: boolean;
   disabled?: boolean;
   centered?: boolean;
+  compact?: boolean;
+  trailing?: string; // small text on the right instead of the arrow, e.g. "1/3"
+  small?: boolean; // shorter button with smaller text, e.g. "Edit profile"
 };
 
 // Full-width button: optional icon + label on the left, optional arrow on the right.
 // primary = blue action, secondary = dark surface, light = white (e.g. Apple).
 // strong = bolder label, for the main action on a screen. centered = label in the middle.
+// compact = only as wide as its label (for small side buttons like Back / Skip).
 export function Button({
   label,
   onPress,
@@ -31,8 +35,12 @@ export function Button({
   strong = false,
   disabled = false,
   centered = false,
+  compact = false,
+  trailing,
+  small = false,
 }: ButtonProps) {
-  const palette = palettes[variant];
+  const colors = useColors();
+  const palette = palettesFor(colors)[variant];
 
   return (
     <Pressable
@@ -45,26 +53,40 @@ export function Button({
         styles.base,
         { backgroundColor: palette.background, borderColor: palette.border },
         centered && styles.centered,
+        compact && styles.compact,
+        small && styles.small,
         pressed && styles.pressed,
         disabled && styles.disabled,
       ]}
     >
       <View style={styles.leading}>
         {icon && <Ionicons name={icon} size={sizes.icon} color={palette.text} />}
-        <Text style={[styles.label, strong && styles.strong, { color: palette.text }]}>
+        <Text
+          style={[
+            styles.label,
+            strong && styles.strong,
+            small && styles.smallLabel,
+            { color: palette.text },
+          ]}
+        >
           {label}
         </Text>
       </View>
       {showArrow && <Ionicons name="arrow-forward" size={sizes.icon} color={palette.text} />}
+      {trailing && <Text style={[styles.trailing, { color: palette.text }]}>{trailing}</Text>}
     </Pressable>
   );
 }
 
-const palettes: Record<ButtonVariant, { background: string; border: string; text: string }> = {
+// Colours per variant for the active theme. `light` is the strongest button (white on the
+// dark theme, black on the light theme), e.g. Continue with Apple.
+const palettesFor = (
+  colors: Palette,
+): Record<ButtonVariant, { background: string; border: string; text: string }> => ({
   primary: { background: colors.primary, border: colors.primary, text: colors.white },
   secondary: { background: colors.surface, border: colors.surfaceBorder, text: colors.text },
-  light: { background: colors.white, border: colors.white, text: colors.black },
-};
+  light: { background: colors.contrast, border: colors.contrast, text: colors.onContrast },
+});
 
 const styles = StyleSheet.create({
   base: {
@@ -83,6 +105,10 @@ const styles = StyleSheet.create({
   },
   label: typography.button,
   strong: typography.buttonStrong,
+  trailing: {
+    ...typography.label,
+    opacity: 0.8,
+  },
   pressed: {
     opacity: 0.9,
     transform: [{ scale: 0.98 }],
@@ -90,6 +116,16 @@ const styles = StyleSheet.create({
   centered: {
     justifyContent: 'center',
   },
+  compact: {
+    justifyContent: 'center',
+    paddingHorizontal: spacing.lg,
+  },
+  small: {
+    height: sizes.headerButton,
+    justifyContent: 'center',
+    paddingHorizontal: spacing.lg,
+  },
+  smallLabel: typography.link,
   disabled: {
     opacity: 0.45,
   },
