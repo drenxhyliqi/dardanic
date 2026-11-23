@@ -1,6 +1,6 @@
-import { CenteredTitle } from '../../components/CenteredTitle';
-import { strings } from '../../i18n';
+import { MessagesInbox } from '../../components/messages/MessagesInbox';
 
+// The Messages tab: your conversations and message requests.
 export default function MessagesScreen() {
-  return <CenteredTitle title={strings.tabs.messages} />;
+  return <MessagesInbox />;
 }
