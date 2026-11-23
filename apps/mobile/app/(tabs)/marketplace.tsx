@@ -1,6 +1,6 @@
-import { CenteredTitle } from '../../components/CenteredTitle';
-import { strings } from '../../i18n';
+import { MarketplaceScreen } from '../../components/marketplace/MarketplaceScreen';
 
-export default function MarketplaceScreen() {
-  return <CenteredTitle title={strings.tabs.marketplace} />;
+// The Marketplace tab: buy and sell cars, parts and car stuff.
+export default function MarketplaceRoute() {
+  return <MarketplaceScreen />;
 }
