@@ -70,7 +70,11 @@ function AppShell() {
         <Stack.Screen name="auth/email" options={withBackBar} />
         <Stack.Screen name="auth/phone" options={withBackBar} />
         <Stack.Screen name="auth/code" options={withBackBar} />
-        {/* The account exists by now: no going back, finish the details. */}
+        {/* The account exists by now: no going back, finish the password / details. */}
+        <Stack.Screen
+          name="auth/password"
+          options={{ ...withBackBar, headerBackVisible: false, gestureEnabled: false }}
+        />
         <Stack.Screen
           name="auth/details"
           options={{ ...withBackBar, headerBackVisible: false, gestureEnabled: false }}

@@ -14,11 +14,14 @@ export type AuthMethod = 'apple' | 'google' | 'email' | 'phone';
 
 export function afterAuth(intent: AuthIntent, method: AuthMethod, contact = '') {
   if (intent === 'login') router.replace('/feed');
-  else router.replace({ pathname: '/auth/details', params: { method, contact } });
+  // Email / phone sign-ups choose a password first; Apple / Google don't need one.
+  else if (method === 'email' || method === 'phone') {
+    router.replace({ pathname: '/auth/password', params: { method, contact } });
+  } else router.replace({ pathname: '/auth/details', params: { method, contact } });
 }
 
-// The ways in, the same for creating an account and logging in: email (a code, no
-// password) as the main button, then "or continue with" and Apple, Google and phone
+// The ways in, the same for creating an account and logging in: email (a code, then a
+// password for new accounts) as the main button, then "or continue with" and Apple, Google and phone
 // (a code by SMS) as three equal icon buttons.
 export function AuthOptions({ intent }: { intent: AuthIntent }) {
   const styles = useStyles();

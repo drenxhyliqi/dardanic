@@ -21,7 +21,7 @@ export const en = {
     back: 'Back',
     // Email / phone → 6-digit code (no passwords)
     emailTitle: 'Your email',
-    emailSubtitle: 'We’ll send you a 6-digit code. No password needed.',
+    emailSubtitle: 'We’ll send you a 6-digit code to check it’s you.',
     emailLabel: 'Email',
     emailPlaceholder: 'you@example.com',
     phoneTitle: 'Your phone number',
@@ -37,6 +37,19 @@ export const en = {
     resend: 'Send a new code',
     codeDevHint: 'Any 6 digits work for now (no server yet).',
     verify: 'Continue',
+    // Create a password (email / phone sign-up, after the code)
+    passwordTitle: 'Create a password',
+    passwordSubtitle: 'You’ll use it with your email or phone to log in.',
+    passwordLabel: 'Password',
+    passwordPlaceholder: 'At least 8 characters',
+    repeatLabel: 'Repeat password',
+    repeatPlaceholder: 'Type it again',
+    rules: {
+      length: 'At least 8 characters',
+      letter: 'A letter',
+      number: 'A number',
+      match: 'Both passwords match',
+    },
     // After signing up: age + agreement
     detailsTitle: 'Almost there',
     detailsSubtitle: 'Two quick things before your profile.',

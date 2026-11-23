@@ -15,7 +15,7 @@ const t = strings.auth;
 const RESEND_AFTER = 30; // seconds
 
 // The 6-digit code we sent by email or SMS. No server yet: any 6 digits work. After
-// it: a new account goes to the age + terms step, logging in goes into the app.
+// it: a new account creates a password, logging in goes into the app.
 export default function CodeScreen() {
   const styles = useStyles();
   const params = useLocalSearchParams<{

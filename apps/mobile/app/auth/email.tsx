@@ -9,7 +9,7 @@ import { strings } from '../../i18n';
 const t = strings.auth;
 const looksLikeEmail = (text: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(text.trim());
 
-// Sign up or log in with email: type it, and we send a 6-digit code (no password).
+// Sign up or log in with email: type it, and we send a 6-digit code.
 export default function EmailScreen() {
   const { intent = 'signup' } = useLocalSearchParams<{ intent?: string }>();
   const [email, setEmail] = useState('');
