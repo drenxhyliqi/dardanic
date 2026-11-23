@@ -16,14 +16,18 @@ export type ProfileHeaderProps = {
   photo: string | null;
   banner: string | null;
   hasStory: boolean;
+  onBack?: () => void; // someone else's profile: a back button instead of settings
+  onMore?: () => void; // someone else's profile: a ••• button on the right (options)
 };
 
 // Banner across the top (behind the status bar) with a clean straight bottom edge,
-// a settings button, and the profile picture sitting on that edge, on the left,
+// a settings button (a back button on someone else's profile), and the profile
+// picture sitting on that edge, on the left,
 // with a ring around it: blue → purple gradient when there's a story, otherwise a
 // thin solid blue accent ring. The dark ring in between is the gap.
 // No banner yet → the blue race-flag pattern, so it never looks empty.
-export function ProfileHeader({ name, photo, banner, hasStory }: ProfileHeaderProps) {
+export function ProfileHeader(props: ProfileHeaderProps) {
+  const { name, photo, banner, hasStory, onBack, onMore } = props;
   const styles = useStyles();
   const colors = useColors();
   const { width } = useWindowDimensions();
@@ -43,14 +47,37 @@ export function ProfileHeader({ name, photo, banner, hasStory }: ProfileHeaderPr
             style={styles.fill}
           />
         )}
-        <View style={[styles.settings, { top: insets.top + spacing.sm }]}>
-          <IconButton
-            icon="settings-outline"
-            label={strings.profile.settings}
-            round
-            onPress={() => router.push('/settings')}
-          />
-        </View>
+        {onBack ? (
+          <>
+            <View style={[styles.back, { top: insets.top + spacing.sm }]}>
+              <IconButton
+                icon="chevron-back"
+                label={strings.messages.back}
+                round
+                onPress={onBack}
+              />
+            </View>
+            {onMore && (
+              <View style={[styles.settings, { top: insets.top + spacing.sm }]}>
+                <IconButton
+                  icon="ellipsis-horizontal"
+                  label={strings.profileMenu.more}
+                  round
+                  onPress={onMore}
+                />
+              </View>
+            )}
+          </>
+        ) : (
+          <View style={[styles.settings, { top: insets.top + spacing.sm }]}>
+            <IconButton
+              icon="settings-outline"
+              label={strings.profile.settings}
+              round
+              onPress={() => router.push('/settings')}
+            />
+          </View>
+        )}
       </View>
 
       <View style={[styles.avatar, { marginTop: -(sizes.profileAvatar / 2 + ring) }]}>
@@ -76,6 +103,10 @@ const useStyles = makeStyles((colors) =>
     fill: {
       width: '100%',
       height: '100%',
+    },
+    back: {
+      position: 'absolute',
+      left: spacing.lg,
     },
     settings: {
       position: 'absolute',

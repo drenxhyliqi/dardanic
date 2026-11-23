@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { strings } from '../../i18n';
 import { makeStyles, radius, sizes, spacing, typography, useColors } from '../../theme';
-import { BANNER_ASPECT, pickBanner, pickProfilePhoto } from '../setup/pickImage';
+import { BANNER_ASPECT, pickBanner, pickProfilePhoto } from '../../utils/pickImage';
 import { LoadingImage } from '../ui/LoadingImage';
 import { Avatar } from './Avatar';
 

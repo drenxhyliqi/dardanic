@@ -2,18 +2,23 @@ import { useCallback, useState } from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { BuildGrid } from '../../components/profile/BuildGrid';
+import { BuildCard } from '../../components/build/BuildCard';
+import { PostGrid } from '../../components/profile/PostGrid';
+import { TextPostList } from '../../components/profile/TextPostList';
 import { ProfileActions } from '../../components/profile/ProfileActions';
-import { ProfileEmpty } from '../../components/profile/ProfileEmpty';
+import { EmptyState } from '../../components/ui/EmptyState';
 import { ProfileHeader } from '../../components/profile/ProfileHeader';
 import { ProfileInfo } from '../../components/profile/ProfileInfo';
 import { ProfileStats } from '../../components/profile/ProfileStats';
 import { ProfileTabs, type ProfileTab } from '../../components/profile/ProfileTabs';
 import { useProfileData } from '../../components/profile/useProfileData';
+import { useOnboarding } from '../../context/OnboardingContext';
+import { usePrivacy } from '../../context/PrivacyContext';
 import { tabBarSpace } from '../../components/tabs/FloatingTabBar';
 import { RefreshIndicator, refreshGap } from '../../components/ui/RefreshIndicator';
 import { usePullToRefresh } from '../../components/ui/usePullToRefresh';
-import { SAMPLE_GARAGE } from '../../data/profile';
+import { MY_POSTS, MY_TEXT_POSTS } from '../../data/myPosts';
+import { SAMPLE_GARAGE } from '../../data/garage';
 import { strings } from '../../i18n';
 import { makeStyles, sizes, spacing } from '../../theme';
 
@@ -28,6 +33,11 @@ export default function ProfileScreen() {
   const profile = useProfileData();
   const insets = useSafeAreaInsets();
   const [tab, setTab] = useState<ProfileTab>('posts');
+  const { isPrivate } = usePrivacy();
+  // A brand-new account (just signed up) has nothing yet; the sample account has posts.
+  const isNewAccount = Boolean(useOnboarding().username);
+  const photoPosts = isNewAccount ? [] : MY_POSTS;
+  const textPosts = isNewAccount ? [] : MY_TEXT_POSTS;
   const [reloadKey, setReloadKey] = useState(0);
 
   const reload = useCallback(async () => {
@@ -44,6 +54,7 @@ export default function ProfileScreen() {
         onScroll={pull.onScroll}
         onScrollEndDrag={pull.onScrollEndDrag}
         scrollEventThrottle={16}
+        alwaysBounceVertical
       >
         <RefreshIndicator
           scrollY={pull.scrollY}
@@ -60,19 +71,31 @@ export default function ProfileScreen() {
             banner={profile.banner}
             hasStory={profile.hasStory}
           />
-          <ProfileInfo profile={profile} />
+          <ProfileInfo profile={profile} locked={isPrivate} />
           <ProfileStats />
           <ProfileActions />
           <ProfileTabs active={tab} onChange={setTab} />
 
           <View style={styles.tabContent}>
-            {tab === 'posts' && (
-              <ProfileEmpty icon="camera-outline" title={t.noPostsTitle} hint={t.noPostsHint} />
+            {tab === 'posts' &&
+              (photoPosts.length ? (
+                <PostGrid posts={photoPosts} />
+              ) : (
+                <EmptyState icon="camera-outline" title={t.noPostsTitle} hint={t.noPostsHint} />
+              ))}
+            {tab === 'text' &&
+              (textPosts.length ? (
+                <TextPostList posts={textPosts} />
+              ) : (
+                <EmptyState icon="reader-outline" title={t.noTextTitle} hint={t.noTextHint} />
+              ))}
+            {tab === 'builds' && (
+              <View style={styles.builds}>
+                {SAMPLE_GARAGE.map((car) => (
+                  <BuildCard key={car.id} car={car} />
+                ))}
+              </View>
             )}
-            {tab === 'gallery' && (
-              <ProfileEmpty icon="images-outline" title={t.noPhotosTitle} hint={t.noPhotosHint} />
-            )}
-            {tab === 'builds' && <BuildGrid cars={SAMPLE_GARAGE} />}
           </View>
         </View>
       </Animated.ScrollView>
@@ -89,7 +112,11 @@ const useStyles = makeStyles((colors) =>
     content: {
       gap: spacing.lg,
     },
-    // Sits right under the tabs (the builds grid runs edge to edge, like Instagram).
+    // Sits right under the tabs (the posts grid runs edge to edge, like Instagram).
+    builds: {
+      gap: spacing.lg,
+      padding: spacing.lg,
+    },
     tabContent: {
       marginTop: -spacing.lg,
       paddingTop: sizes.gridGap,

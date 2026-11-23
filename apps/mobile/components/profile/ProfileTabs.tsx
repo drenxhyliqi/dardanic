@@ -4,12 +4,14 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { strings } from '../../i18n';
 import { makeStyles, sizes, spacing, useColors } from '../../theme';
 
-export type ProfileTab = 'posts' | 'gallery' | 'builds';
+export type ProfileTab = 'posts' | 'text' | 'builds';
 
-const TABS: { tab: ProfileTab; icon: 'grid' | 'images' | 'car-sport' }[] = [
+// Photo posts · text posts (a page with lines, so it doesn't look like messages) ·
+// builds (speedometer = the cars and their numbers).
+const TABS: { tab: ProfileTab; icon: 'grid' | 'reader' | 'speedometer' }[] = [
   { tab: 'posts', icon: 'grid' },
-  { tab: 'gallery', icon: 'images' },
-  { tab: 'builds', icon: 'car-sport' },
+  { tab: 'text', icon: 'reader' },
+  { tab: 'builds', icon: 'speedometer' },
 ];
 
 export type ProfileTabsProps = {
@@ -17,7 +19,7 @@ export type ProfileTabsProps = {
   onChange: (tab: ProfileTab) => void;
 };
 
-// Posts · Gallery · Builds as icons (like Instagram), with a thin line under the
+// Posts · Text posts · Builds as icons (like Instagram), with a thin line under the
 // active one. The names are still read out by screen readers.
 export function ProfileTabs({ active, onChange }: ProfileTabsProps) {
   const styles = useStyles();

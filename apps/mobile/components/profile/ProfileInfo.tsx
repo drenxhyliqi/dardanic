@@ -3,11 +3,19 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { strings } from '../../i18n';
 import { makeStyles, sizes, spacing, typography, useColors } from '../../theme';
+import { Tag } from '../ui/Tag';
+import { InstagramLink } from './InstagramLink';
 import type { ProfileData } from './useProfileData';
 
-// Name, @username, followers | following, city and crew, then the bio, aligned left
-// under the profile picture.
-export function ProfileInfo({ profile }: { profile: ProfileData }) {
+// Name, @username, followers | following, city and crew, then the bio and Instagram
+// (if they added it), aligned left under the profile picture.
+export type ProfileInfoProps = {
+  profile: ProfileData & { instagram?: string };
+  locked?: boolean; // private account: a lock next to the name
+  followsYou?: boolean; // someone else's profile: "Follows you" next to the username
+};
+
+export function ProfileInfo({ profile, locked = false, followsYou = false }: ProfileInfoProps) {
   const styles = useStyles();
   const colors = useColors();
   const t = strings.profile;
@@ -15,8 +23,21 @@ export function ProfileInfo({ profile }: { profile: ProfileData }) {
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.name}>{profile.displayName || profile.username}</Text>
-        <Text style={styles.muted}>@{profile.username}</Text>
+        <View style={styles.nameRow}>
+          <Text style={styles.name}>{profile.displayName || profile.username}</Text>
+          {locked && (
+            <Ionicons
+              name="lock-closed"
+              size={sizes.chipIcon}
+              color={colors.textMuted}
+              accessibilityLabel={strings.privacy.locked}
+            />
+          )}
+        </View>
+        <View style={styles.nameRow}>
+          <Text style={styles.muted}>@{profile.username}</Text>
+          {followsYou && <Tag label={strings.privacy.followsYou} />}
+        </View>
       </View>
 
       <View style={styles.follow}>
@@ -36,15 +57,18 @@ export function ProfileInfo({ profile }: { profile: ProfileData }) {
             <Text style={styles.muted}>{profile.city}</Text>
           </View>
         )}
-        <View style={styles.metaItem}>
-          <Ionicons name="people-outline" size={sizes.chipIcon} color={colors.primaryLight} />
-          <Text style={styles.crew}>
-            {t.crew} · {profile.crew}
-          </Text>
-        </View>
+        {profile.crew !== '' && (
+          <View style={styles.metaItem}>
+            <Ionicons name="people-outline" size={sizes.chipIcon} color={colors.primaryLight} />
+            <Text style={styles.crew}>
+              {t.crew} · {profile.crew}
+            </Text>
+          </View>
+        )}
       </View>
 
       {profile.bio !== '' && <Text style={styles.bio}>{profile.bio}</Text>}
+      {profile.instagram && <InstagramLink handle={profile.instagram} />}
     </View>
   );
 }
@@ -54,6 +78,11 @@ const useStyles = makeStyles((colors) =>
     container: {
       gap: spacing.md,
       paddingHorizontal: spacing.xl,
+    },
+    nameRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: spacing.xs,
     },
     name: {
       ...typography.profileName,
