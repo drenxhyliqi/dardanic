@@ -2,12 +2,15 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { makeStyles, radius, sizes, spacing, typography } from '../../theme';
 
+const STEP_WIDTH = sizes.headerButton * 2; // fits "1. Identity"
+
 export type SetupProgressProps = {
   current: number; // 1-based
   names: readonly string[]; // one per step, e.g. Identity, Place, Media
 };
 
-// Top of profile setup: one short line per step with its name underneath.
+// Top of profile setup: one short line per step with its name underneath, compact and
+// on the same line as the light / dark switch (same height, centred with it).
 // Done and current steps are blue with light text; upcoming ones are grey.
 export function SetupProgress({ current, names }: SetupProgressProps) {
   const styles = useStyles();
@@ -30,15 +33,18 @@ export function SetupProgress({ current, names }: SetupProgressProps) {
 
 const useStyles = makeStyles((colors) =>
   StyleSheet.create({
+    // Same top and height as the switch (top right), so the two line up.
     row: {
       flexDirection: 'row',
+      alignItems: 'center',
       gap: spacing.sm,
+      height: sizes.headerButton,
+      marginTop: spacing.sm,
       paddingHorizontal: spacing.xl,
-      paddingVertical: spacing.md,
     },
     step: {
-      flex: 1,
-      gap: spacing.sm,
+      width: STEP_WIDTH,
+      gap: spacing.xs,
     },
     bar: {
       height: sizes.progressLine,
