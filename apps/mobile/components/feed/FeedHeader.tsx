@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { Image, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { useNotifications } from '../../context/NotificationsContext';
 import { strings } from '../../i18n';
-import { makeStyles, sizes, spacing, useColors } from '../../theme';
+import { makeStyles, radius, sizes, spacing, useColors } from '../../theme';
 import { FeedFilterMenu } from './FeedFilterMenu';
 import type { FeedFilter } from './feedFilters';
 
@@ -24,10 +25,11 @@ type HeaderIconProps = {
   icon: keyof typeof Ionicons.glyphMap;
   label: string;
   onPress?: () => void;
+  dot?: boolean; // small red dot: something new (e.g. unread notifications)
 };
 
 // A tap area holding one icon. The label is read out by screen readers.
-function HeaderIcon({ icon, label, onPress }: HeaderIconProps) {
+function HeaderIcon({ icon, label, onPress, dot }: HeaderIconProps) {
   const styles = useStyles();
   const colors = useColors();
   return (
@@ -38,6 +40,7 @@ function HeaderIcon({ icon, label, onPress }: HeaderIconProps) {
       style={({ pressed }) => [styles.iconButton, pressed && styles.pressed]}
     >
       <Ionicons name={icon} size={sizes.headerIcon} color={colors.text} />
+      {dot && <View style={styles.dot} />}
     </Pressable>
   );
 }
@@ -49,13 +52,15 @@ export type FeedHeaderProps = {
 
 // Top bar of the Feed: + (create) on the left, the full logo with a ▾ in the middle
 // (opens the For you / Following / Crews menu), search and notifications on the right.
-// Search and the bell don't open anything yet.
+// Search opens Search & Explore (with the way into FindMe); the bell opens
+// notifications and shows a red dot when something is unread.
 export function FeedHeader({ filter, onChangeFilter }: FeedHeaderProps) {
   const styles = useStyles();
   const colors = useColors();
   const t = strings.feed;
   const insets = useSafeAreaInsets();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { unread } = useNotifications();
 
   return (
     <View style={styles.bar}>
@@ -83,8 +88,13 @@ export function FeedHeader({ filter, onChangeFilter }: FeedHeaderProps) {
       </View>
 
       <View style={styles.actions}>
-        <HeaderIcon icon="search-outline" label={t.search} />
-        <HeaderIcon icon="notifications-outline" label={t.notifications} />
+        <HeaderIcon icon="search-outline" label={t.search} onPress={() => router.push('/search')} />
+        <HeaderIcon
+          icon="notifications-outline"
+          label={t.notifications}
+          dot={unread > 0}
+          onPress={() => router.push('/notifications')}
+        />
       </View>
 
       <FeedFilterMenu
@@ -145,6 +155,17 @@ const useStyles = makeStyles((colors) =>
     },
     pressed: {
       opacity: 0.6,
+    },
+    dot: {
+      position: 'absolute',
+      top: spacing.sm,
+      right: spacing.sm,
+      width: spacing.sm,
+      height: spacing.sm,
+      borderRadius: radius.full,
+      borderWidth: sizes.tabIndicator,
+      borderColor: colors.background,
+      backgroundColor: colors.alert,
     },
   }),
 );
