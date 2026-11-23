@@ -76,6 +76,15 @@ function AppShell() {
         <Stack.Screen name="delete-account" options={titled(strings.settings.deleteTitle)} />
         <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
         <Stack.Screen
+          name="report"
+          options={{
+            presentation: 'transparentModal',
+            animation: 'none',
+            gestureEnabled: false,
+            contentStyle: { backgroundColor: 'transparent' },
+          }}
+        />
+        <Stack.Screen
           name="create/index"
           options={{
             presentation: 'transparentModal',
