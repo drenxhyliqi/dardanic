@@ -1,9 +1,10 @@
 import { router } from 'expo-router';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { strings } from '../../i18n';
-import { spacing } from '../../theme';
+import { makeStyles, spacing, typography } from '../../theme';
 import { Button } from '../ui/Button';
+import { SocialButton } from './SocialButton';
 
 export type AuthIntent = 'signup' | 'login';
 
@@ -16,40 +17,52 @@ export function afterAuth(intent: AuthIntent, method: AuthMethod, contact = '') 
   else router.replace({ pathname: '/auth/details', params: { method, contact } });
 }
 
-// The four ways in, the same for creating an account and logging in: Apple, Google,
-// email (a code, no password) and phone (a code by SMS).
+// The ways in, the same for creating an account and logging in: email (a code, no
+// password) as the main button, then "or continue with" and Apple, Google and phone
+// (a code by SMS) as three equal icon buttons.
 export function AuthOptions({ intent }: { intent: AuthIntent }) {
+  const styles = useStyles();
   const t = strings.auth;
   return (
     <View style={styles.group}>
       <Button
-        label={t.continueApple}
-        variant="light"
-        icon="logo-apple"
-        onPress={() => afterAuth(intent, 'apple')}
-      />
-      <Button
-        label={t.continueGoogle}
-        variant="secondary"
-        icon="logo-google"
-        onPress={() => afterAuth(intent, 'google')}
-      />
-      <Button
         label={t.continueEmail}
-        variant="secondary"
         icon="mail-outline"
+        strong
         onPress={() => router.push({ pathname: '/auth/email', params: { intent } })}
       />
-      <Button
-        label={t.continuePhone}
-        variant="secondary"
-        icon="call-outline"
-        onPress={() => router.push({ pathname: '/auth/phone', params: { intent } })}
-      />
+      <View style={styles.divider}>
+        <View style={styles.line} />
+        <Text style={styles.or}>{t.orContinueWith}</Text>
+        <View style={styles.line} />
+      </View>
+      <View style={styles.row}>
+        <SocialButton
+          icon="logo-apple"
+          label={t.continueApple}
+          onPress={() => afterAuth(intent, 'apple')}
+        />
+        <SocialButton
+          icon="logo-google"
+          label={t.continueGoogle}
+          onPress={() => afterAuth(intent, 'google')}
+        />
+        <SocialButton
+          icon="call-outline"
+          label={t.continuePhone}
+          onPress={() => router.push({ pathname: '/auth/phone', params: { intent } })}
+        />
+      </View>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  group: { gap: spacing.md },
-});
+const useStyles = makeStyles((colors) =>
+  StyleSheet.create({
+    group: { gap: spacing.md },
+    divider: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
+    line: { flex: 1, height: StyleSheet.hairlineWidth, backgroundColor: colors.surfaceBorder },
+    or: { ...typography.small, color: colors.textMuted },
+    row: { flexDirection: 'row', gap: spacing.md },
+  }),
+);

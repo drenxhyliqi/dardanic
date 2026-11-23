@@ -17,6 +17,7 @@ export const en = {
     continueGoogle: 'Continue with Google',
     continueEmail: 'Continue with email',
     continuePhone: 'Continue with phone',
+    orContinueWith: 'or continue with',
     back: 'Back',
     // Email / phone → 6-digit code (no passwords)
     emailTitle: 'Your email',
