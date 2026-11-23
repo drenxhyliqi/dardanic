@@ -20,4 +20,6 @@ export const typography = {
   buttonStrong: { fontWeight: '700' },
   badge: { fontSize: 11, fontWeight: '700', letterSpacing: 0.8 },
   small: { fontSize: 12, lineHeight: 18, fontWeight: '400' },
+  plate: { fontFamily: fonts.heading, fontSize: 24, letterSpacing: 2 }, // FindMe plate field
+  plateCode: { fontFamily: fonts.headingSemi, fontSize: 10, letterSpacing: 0.5 },
 } as const;

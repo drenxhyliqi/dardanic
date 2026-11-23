@@ -13,3 +13,8 @@ export function initials(name: string): string {
     .map((part) => part[0].toUpperCase())
     .join('');
 }
+
+// Thousands separators for counts: 1284 → "1,284".
+export function withCommas(count: number): string {
+  return String(count).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}

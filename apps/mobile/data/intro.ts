@@ -42,16 +42,16 @@ export const INTRO_PEOPLE: IntroPerson[] = [
 ];
 
 export const INTRO_PLACES: IntroPlace[] = [
-  { kind: 'meet', title: 'Night meet', when: 'Tonight · 21:00', km: 2.1, going: 84, tall: true, active: true },
+  { kind: 'meet', title: 'Takim nate', when: 'Tonight · 21:00', km: 2.1, going: 84, tall: true, active: true },
   { kind: 'shop', title: 'Detail Pro', when: 'Open until 19:00', km: 4.8, going: 0 },
-  { kind: 'build', title: 'Golf R on air', when: 'Posted 2h ago', km: 1.3, going: 0, tall: true },
-  { kind: 'meet', title: 'Cars & coffee', when: 'Sun · 10:00', km: 6.4, going: 52 },
+  { kind: 'build', title: 'Golf R me suspension ajri', when: 'Posted 2h ago', km: 1.3, going: 0, tall: true },
+  { kind: 'meet', title: 'Kafe & vetura', when: 'Sun · 10:00', km: 6.4, going: 52 },
   { kind: 'shop', title: 'Wrap Studio', when: 'Open now', km: 3.2, going: 0, active: true },
   { kind: 'build', title: 'E30 restomod', when: 'Posted 5h ago', km: 0.9, going: 0, tall: true },
-  { kind: 'meet', title: 'Track day', when: 'Sat · 09:00', km: 12.5, going: 120, tall: true },
+  { kind: 'meet', title: 'Ditë në pistë', when: 'Sat · 09:00', km: 12.5, going: 120, tall: true },
   { kind: 'shop', title: 'Tune Garage', when: 'Open now', km: 1.7, going: 0 },
   { kind: 'build', title: 'RS3 stage 2', when: 'Posted 1d ago', km: 5.6, going: 0, active: true },
-  { kind: 'meet', title: 'Sunday cruise', when: 'Sun · 17:00', km: 8.0, going: 37, tall: true, active: true },
+  { kind: 'meet', title: 'Xhiro e së dielës', when: 'Sun · 17:00', km: 8.0, going: 37, tall: true, active: true },
   { kind: 'shop', title: 'Wheel House', when: 'Open until 18:00', km: 7.3, going: 0 },
   { kind: 'build', title: 'Supra MK4', when: 'Posted 3h ago', km: 2.9, going: 0, tall: true },
 ];

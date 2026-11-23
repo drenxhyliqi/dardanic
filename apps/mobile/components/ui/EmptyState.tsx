@@ -4,15 +4,15 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { makeStyles, radius, sizes, spacing, typography, useColors } from '../../theme';
 
-export type ProfileEmptyProps = {
+export type EmptyStateProps = {
   icon: ComponentProps<typeof Ionicons>['name'];
   title: string;
   hint: string;
 };
 
-// A profile tab with nothing in it yet, Instagram-style: an outlined circle with an
-// icon, a bold title and a short hint. No buttons: posting happens through the + tab.
-export function ProfileEmpty({ icon, title, hint }: ProfileEmptyProps) {
+// Nothing to show yet (a profile tab, an empty feed), Instagram-style: an outlined circle with an
+// icon, a bold title and a short hint. No buttons.
+export function EmptyState({ icon, title, hint }: EmptyStateProps) {
   const styles = useStyles();
   const colors = useColors();
   return (

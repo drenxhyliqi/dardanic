@@ -20,6 +20,7 @@ export const radius = {
 export const sizes = {
   button: 60,
   input: 56,
+  searchBar: 44, // rounded search fields
   radio: 22,
   badgeCheck: 20,
   flagPattern: 240,
@@ -54,7 +55,7 @@ export const sizes = {
   profileAvatar: 96,
   accentRing: 2, // blue ring around the profile picture
   storyRing: 3, // gradient ring when the user has a story
-  pullRefresh: 140, // how far to pull down before letting go refreshes (a long pull)
+  pullRefresh: 90, // how far to pull down before letting go refreshes (like iOS apps)
   spinner: 26, // the reload circle shown while pulling / refreshing
   spinnerLine: 2.5,
   tabIndicator: 1.5, // line under the active profile tab
@@ -63,4 +64,39 @@ export const sizes = {
   gridGap: 2, // hairline gap between grid tiles
   introStepActive: 24, // width of the active step bar on the intro
   introStep: 8,
+  storyAvatar: 64, // feed stories row
+  storyLabel: 72, // width of the name under a story
+  storyAddBadge: 20, // blue + on "Your story"
+  postAvatar: 36, // avatar in a post header
+  actionIcon: 26, // like / comment / share / save
+  mediaDot: 6, // photo position dots under a post
+  flameBurst: 96, // flame that pops on double-tap
+  dateTile: 58, // calendar tile on a meet's photo
+  meetFace: 30, // attendee faces on a meet card
+  spotsBar: 6, // how full a meet is
+  inboxAvatar: 52,
+  chatAvatar: 28,
+  chatPhoto: 220, // width of a photo in a chat (height is 4:5)
+  sendButton: 34,
+  typingDot: 6,
+  unreadBadge: 20,
+  plateField: 64, // the big plate-shaped search field
+  plateFieldStrip: 34, // its blue country strip
+  plateBorder: 2,
+  codeBadge: 22, // height of a country code badge (mini plate strip)
+  codeBadgeWidth: 38, // fixed, so names line up whatever the code length
+  heroIcon: 56, // round icon at the top of a feature page
+  colorSwatch: 34,
+  searchAvatar: 48,
+  suggestionCard: 156, // width of a 'Suggested for you' card
+  suggestionAvatar: 72,
+  grabber: 36, // handle on top of a bottom sheet
+  grabberHeight: 5,
+  commentAvatar: 32,
+  replyAvatar: 24,
+  threadLine: 1.5, // line linking nested replies to their comment
+  commentFlame: 16, // small flame on a comment
+  composerMax: 100, // the comment field grows up to this height
+  storyProgress: 2.5, // height of the bars at the top of a story
+  storyReply: 44, // height of the reply field on a story
 } as const;

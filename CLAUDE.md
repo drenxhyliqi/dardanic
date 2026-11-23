@@ -4,7 +4,7 @@ DARDANIC is a social app for car enthusiasts in Kosovo and the Albanian diaspora
 React Native + Expo app, Supabase backend (not connected yet). App language: English. Light and dark theme (Settings → Theme: Light / Dark / Automatic).
 
 ## Stack
-- **Now:** Expo SDK 58 + Expo Router, TypeScript (strict), pnpm workspaces, `@expo/vector-icons`, `expo-font` (Unbounded headings), `expo-splash-screen`, `expo-image-picker`, `@react-native-async-storage/async-storage` (saved settings).
+- **Now:** Expo SDK 58 + Expo Router, TypeScript (strict), pnpm workspaces, `@expo/vector-icons`, `expo-font` (Unbounded headings), `expo-splash-screen`, `expo-image-picker`, `@react-native-async-storage/async-storage` (saved settings), `expo-haptics` (flame vibration).
 - **Next:** Supabase (Postgres, Auth, Storage, Edge Functions), TanStack Query.
 - **Later:** Cloudflare Images/Stream, Expo Notifications, RevenueCat, Next.js web, PostHog, Sentry.
 
@@ -18,16 +18,22 @@ apps/mobile/
   components/ui/          shared primitives: Button, Heading, TextField, TextLink, Chip,
                           Skeleton, LoadingImage
   components/<feature>/   welcome/, auth/, plan/, launch/, setup/, profile/, vibes/,
-                          intro/, ready/, feed/, tabs/
+                          intro/, ready/, feed/, story/, flame/, meet/,
+                          comments/, messages/, findme/, notifications/, search/, tabs/
   theme/                  colors (dark + light palettes), ThemeProvider (useColors, makeStyles,
                           useTheme), spacing/radius/sizes, typography, fonts
   i18n/                   en.ts (all text) + index.ts (exports `strings`)
   assets/brand|images/    logos, welcome photo, flag pattern (@3x)
   data/  utils/           static lists (Kosovo cities, vibes, intro samples), small helpers (text)
-  context/                OnboardingContext (what the user entered during sign-up)
+  context/                AppProviders: Onboarding, Stories, Comments, Messages, FindMe;
+                          ScrollCollapse
+  services/<feature>/     backend operations behind an interface (mock today, Supabase later),
+                          e.g. services/findme, services/search (interface + mock)
+  hooks/                  data hooks screens use (useExplore, useAccountSearch, useSearchHistory);
+                          they become TanStack Query hooks once Supabase is in
 docs/                     PROGRESS.md, DECISIONS.md
 ```
-Planned when needed: `apps/mobile/hooks/` (TanStack Query), `apps/mobile/lib/` (Supabase client), `supabase/`, `packages/shared/` (when the web app arrives).
+Planned when needed: `apps/mobile/lib/` (Supabase client), `supabase/`, `packages/shared/` (when the web app arrives).
 
 ## Commands (from the repo root)
 | Task | Command |
@@ -44,8 +50,9 @@ Not set up yet: lint (ESLint), tests, Supabase. Add them here when they are.
 - **Session end** (or when I say "wrap up"): run the `session-handoff` skill.
 - **No hardcoded colours, spacing or fonts.** Use tokens from `apps/mobile/theme`.
 - **Colours come from the active theme.** Never import a palette directly. In components use `makeStyles((colors) => StyleSheet.create({...}))` and call the hook (`const styles = useStyles()`), or `useColors()` for inline colours. Both palettes live in `theme/colors.ts`; any new colour needs a dark and a light value. Single-colour logos get `tintColor={colors.text}`.
-- **Solid colours only.** No glows or decorative gradients. Exceptions: fading a photo (or the intro card carousel) into the background so text stays readable, the checkered-flag fade on the Standard plan card (`assets/images/flag-fade@3x.png`), and the blue → purple story ring around a profile picture (`storyRing`).
-- **Accent colours:** blue (`primary`) = actions and confirmations (e.g. "Account created"). Red = likes, badges, LIVE only (no token yet). Never red buttons.
+- **Solid colours only.** No glows or decorative gradients. Exceptions: fading a photo (or the intro card carousel) into the background so text stays readable, the checkered-flag fade on the Standard plan card (`assets/images/flag-fade@3x.png`), the blue → purple story ring around a profile picture (`storyRing`), and the dark fade on story photos (`storyFade`).
+- **Accent colours:** blue (`primary`) = actions, confirmations (e.g. "Account created") and your own chat bubbles. Red = a given flame (`flame`, DARDANIC's "like"), badges and LIVE (`alert`) only. Never red buttons.
+- **Button sizes:** `Button small` (40) for actions inside profiles, cards, lists and bottom sheets (Follow, Unblock, Block/Cancel, Accept/Decline…); the default large size (60) only for a full screen's main call-to-action (e.g. Continue in sign-up).
 - **Fonts:** headings use Unbounded (`typography.heading/title/cardTitle`); everything else the system font.
 - **No hardcoded user-facing text.** Add it to `apps/mobile/i18n/en.ts` and read it via `strings` from `apps/mobile/i18n`.
 - **Local images:** give `<Image>` an explicit width and height (or a sized container); name high-res images `@3x`.

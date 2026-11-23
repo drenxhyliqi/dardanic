@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { strings } from '../../i18n';
 import { makeStyles, radius, sizes, spacing, typography, useColors } from '../../theme';
-import { pickBanner, pickProfilePhoto } from './pickImage';
+import { pickBanner, pickProfilePhoto } from '../../utils/pickImage';
 
 type IconName = ComponentProps<typeof Ionicons>['name'];
 

@@ -1,7 +1,8 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { Animated, Easing, type NativeScrollEvent, type NativeSyntheticEvent } from 'react-native';
 
 import { sizes } from '../../theme';
+import { useCollapseOnScroll } from '../tabs/useCollapseOnScroll';
 
 const SPIN_MS = 800;
 const OPEN_MS = 200;
@@ -11,16 +12,31 @@ const CLOSE_MS = 250;
 // onRefresh. While it runs, a gap of gapHeight stays open at the top (holding the reload
 // circle); when it's done the content slides back up over it.
 // Gives back the scroll handlers plus the values the reload circle animates with.
-export function usePullToRefresh(onRefresh: () => Promise<void>, gapHeight: number) {
+// Scrolling also shrinks the bottom bar (on the main tabs), like on the Feed.
+// onScrollChange (optional) replaces that, for a page with its own bars (the Feed).
+export function usePullToRefresh(
+  onRefresh: () => Promise<void>,
+  gapHeight: number,
+  onScrollChange?: (event: NativeScrollEvent) => void,
+) {
   const scrollY = useRef(new Animated.Value(0)).current;
   const active = useRef(new Animated.Value(0)).current; // 1 while refreshing
   const spin = useRef(new Animated.Value(0)).current;
   const gap = useRef(new Animated.Value(0)).current; // space kept open above the content
   const [refreshing, setRefreshing] = useState(false);
+  const bottomBar = useCollapseOnScroll();
+  const listener = onScrollChange ?? bottomBar.onScroll;
 
-  const onScroll = Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
-    useNativeDriver: true,
-  });
+  // Built once (per listener): rebuilding it on every redraw can drop the drag being
+  // tracked, so the pull wouldn't register.
+  const onScroll = useMemo(
+    () =>
+      Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
+        useNativeDriver: true,
+        listener: (event: NativeSyntheticEvent<NativeScrollEvent>) => listener(event.nativeEvent),
+      }),
+    [scrollY, listener],
+  );
 
   const onScrollEndDrag = useCallback(
     async (event: NativeSyntheticEvent<NativeScrollEvent>) => {

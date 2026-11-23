@@ -41,9 +41,18 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Allow DARDANIC to access your photos so you can add a profile photo and banner.",
-          "cameraPermission": false,
+          "photosPermission": "Allow DARDANIC to access your photos so you can add them to your profile, chats and listings.",
+          "cameraPermission": "Allow DARDANIC to use your camera so you can take photos to send in chats and listings.",
           "microphonePermission": false
+        }
+      ],
+      "expo-video",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow DARDANIC to use your camera so you can take photos and videos for your story.",
+          "microphonePermission": "Allow DARDANIC to use your microphone so your story videos have sound.",
+          "recordAudioAndroid": true
         }
       ]
     ]

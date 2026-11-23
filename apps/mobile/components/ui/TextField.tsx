@@ -12,9 +12,10 @@ export type TextFieldProps = Omit<TextInputProps, 'style' | 'secureTextEntry'> &
   password?: boolean;
   icon?: IconName; // small icon inside the field, on the left
   right?: ReactNode; // extra content inside the field, on the right (e.g. a clear button)
+  round?: boolean; // search bar look: fully rounded, slimmer, smaller text
 };
 
-// A labelled text input. password = hidden text with a show/hide eye button.
+// A labelled text input (autocorrect off). password = hidden text with a show/hide eye button.
 // multiline = a taller box for longer text (e.g. a bio).
 export function TextField({
   label,
@@ -22,6 +23,7 @@ export function TextField({
   icon,
   right,
   multiline,
+  round = false,
   onFocus,
   onBlur,
   ...inputProps
@@ -35,17 +37,26 @@ export function TextField({
     <View style={styles.container}>
       {label && <Text style={styles.label}>{label}</Text>}
       <View
-        style={[styles.field, multiline && styles.fieldMultiline, focused && styles.fieldFocused]}
+        style={[
+          styles.field,
+          round && styles.fieldRound,
+          multiline && styles.fieldMultiline,
+          focused && styles.fieldFocused,
+        ]}
       >
         {icon && <Ionicons name={icon} size={sizes.icon} color={colors.textMuted} />}
         <TextInput
+          // No autocorrect / spell check: people write in Albanian, and the phone would
+          // "fix" it into English. A screen can still turn them back on.
+          autoCorrect={false}
+          spellCheck={false}
           {...inputProps}
           multiline={multiline}
           accessibilityLabel={label ?? inputProps.placeholder}
           secureTextEntry={hidden}
           placeholderTextColor={colors.textMuted}
           selectionColor={colors.primary}
-          style={[styles.input, multiline && styles.inputMultiline]}
+          style={[styles.input, round && styles.inputRound, multiline && styles.inputMultiline]}
           onFocus={(e) => {
             setFocused(true);
             onFocus?.(e);
@@ -95,6 +106,10 @@ const useStyles = makeStyles((colors) =>
       borderColor: colors.surfaceBorder,
       backgroundColor: colors.surface,
     },
+    fieldRound: {
+      height: sizes.searchBar,
+      borderRadius: radius.full,
+    },
     fieldMultiline: {
       height: 'auto',
       minHeight: sizes.bioField,
@@ -110,6 +125,7 @@ const useStyles = makeStyles((colors) =>
       height: '100%',
       color: colors.text,
     },
+    inputRound: typography.paragraph,
     inputMultiline: {
       height: 'auto',
       textAlignVertical: 'top',
