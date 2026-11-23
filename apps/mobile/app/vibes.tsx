@@ -18,7 +18,7 @@ import { THEME_TOGGLE_ROOM } from '../components/settings/SignupThemeToggle';
 
 const t = strings.vibes;
 
-// After profile setup: pick exactly 5 vibes to shape the feed, then the intro.
+// After profile setup: pick exactly 3 vibes to shape the feed, then the intro.
 // Filters show a handful per tab; search looks through every vibe (100+).
 // Nothing is saved yet (no backend).
 export default function VibesScreen() {

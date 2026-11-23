@@ -177,7 +177,7 @@ export const en = {
   },
   vibes: {
     title: 'Your vibes',
-    subtitle: 'Pick 5 vibes to build your feed. You can change them in your settings.',
+    subtitle: 'Pick 3 vibes to build your feed. You can change them in your settings.',
     counter: (picked: number, total: number) => `${picked}/${total}`,
     continue: 'Continue',
     searchPlaceholder: 'Search 100+ vibes',
@@ -226,7 +226,7 @@ export const en = {
   ready: {
     eyebrow: 'Your account is ready',
     welcome: (name: string) => (name ? `Welcome, ${name}` : 'Welcome'),
-    body: 'Your top 5 vibes built your feed.',
+    body: 'Your top 3 vibes built your feed.',
   },
   profile: {
     settings: 'Settings',
@@ -735,6 +735,9 @@ export const en = {
   settings: {
     title: 'Settings',
     theme: 'Theme',
+    switchToLight: 'Switch to light mode',
+    switchToDark: 'Switch to dark mode',
+    darkMode: 'Dark mode',
     themeHint: 'Automatic follows your phone’s light or dark setting.',
     themes: { light: 'Light', dark: 'Dark', system: 'Automatic' },
     sections: {
@@ -748,9 +751,6 @@ export const en = {
     help: 'Help & support',
     helpHint: 'Contact us or report a problem',
     guidelines: 'Community Guidelines',
-    switchToLight: 'Switch to light mode',
-    switchToDark: 'Switch to dark mode',
-    darkMode: 'Dark mode',
     terms: 'Terms of Service',
     privacyPolicy: 'Privacy Policy',
     logOut: 'Log out',
@@ -771,6 +771,8 @@ export const en = {
     reportProblem: 'Report a problem',
     reportProblemHint: 'Something broken or not working right? Tell us.',
     problemSubject: 'Problem in the DARDANIC app',
+    noMailTitle: 'No email app found',
+    noMailText: (email: string) => `Write to us at ${email} from any email app or website.`,
     safetyTitle: 'Safety',
     safetyText:
       'To report a post, comment, story, listing, message or person, tap ••• on it and choose Report. If someone is in danger, call 112.',
@@ -787,8 +789,6 @@ export const en = {
     deleteReasonTitle: 'Why are you leaving? (optional)',
     deleteReasons: [
       'I don’t use it anymore',
-    noMailTitle: 'No email app found',
-    noMailText: (email: string) => `Write to us at ${email} from any email app or website.`,
       'Privacy concerns',
       'Too many notifications',
       'I have another account',

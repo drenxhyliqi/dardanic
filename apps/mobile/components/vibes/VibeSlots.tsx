@@ -11,7 +11,7 @@ export type VibeSlotsProps = {
   onRemove: (id: string) => void;
 };
 
-// The 5 slots above the search: picked vibes fill them in order (tap one to remove it),
+// The slots (3) above the search: picked vibes fill them in order (tap one to remove it),
 // the rest stay as numbered dashed boxes. Shows the picks from every category at once.
 export function VibeSlots({ picked, total, onRemove }: VibeSlotsProps) {
   const styles = useStyles();

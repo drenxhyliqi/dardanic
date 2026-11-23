@@ -4,7 +4,7 @@ export type VibeFilter = keyof typeof strings.vibes.filters;
 export type Vibe = { id: string; label: string; filters: VibeFilter[] };
 
 export const VIBE_FILTERS: VibeFilter[] = ['popular', 'brands', 'style', 'mods', 'meets'];
-export const VIBES_TO_PICK = 5;
+export const VIBES_TO_PICK = 3;
 
 const v = (id: string, label: string, ...filters: VibeFilter[]): Vibe => ({ id, label, filters });
 
