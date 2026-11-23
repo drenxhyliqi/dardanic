@@ -8,9 +8,7 @@ import { Button } from '../../ui/Button';
 import { PillTabs } from '../../ui/PillTabs';
 import { TextField } from '../../ui/TextField';
 import { ToggleRow } from '../../ui/ToggleRow';
-import { categoryById } from '../../../data/marketplaceCategories';
 import { CategoryGrid } from './CategoryGrid';
-import { FitsFields } from './FitsFields';
 import { PhotoStrip } from './PhotoStrip';
 import type { useSellDraft } from './useSellDraft';
 
@@ -20,7 +18,7 @@ const CONDITIONS: Condition[] = ['new', 'likeNew', 'used', 'forParts'];
 export type SellFormProps = ReturnType<typeof useSellDraft> & { onPublish: () => void };
 
 // The sell form, top to bottom: the "only car stuff" rule, photos, a car-only category,
-// title and price, condition, which car it fits (parts / wheels / accessories), the
+// title and price, condition, the
 // description with all the details in the seller's words, city, the "This listing is
 // car-related" switch, and Publish.
 export function SellForm({ fields, set, ready, onPublish }: SellFormProps) {
@@ -65,16 +63,6 @@ export function SellForm({ fields, set, ready, onPublish }: SellFormProps) {
             onChange={(condition) => set('condition', condition)}
           />
         </View>
-        {fields.category && categoryById(fields.category).fits && (
-          <FitsFields
-            brand={fields.fitsBrand}
-            model={fields.fitsModel}
-            onChange={(brand, model) => {
-              set('fitsBrand', brand);
-              set('fitsModel', model);
-            }}
-          />
-        )}
         <TextField
           label={t.description}
           placeholder={t.descriptionPlaceholder}

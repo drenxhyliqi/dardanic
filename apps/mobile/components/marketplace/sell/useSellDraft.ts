@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { categoryById, type ListingCategory } from '../../../data/marketplaceCategories';
+import type { ListingCategory } from '../../../data/marketplaceCategories';
 import { ME } from '../../../data/myPosts';
 import { SAMPLE_PROFILE } from '../../../data/profile';
 import type { Condition, ListingDraft } from '../../../services/marketplace';
@@ -13,14 +13,12 @@ export type SellFields = {
   condition: Condition;
   description: string; // every detail, in the seller's own words (Albanian)
   city: string;
-  fitsBrand: string; // parts, wheels, accessories: the car it fits (optional)
-  fitsModel: string;
   confirmed: boolean; // "This listing is car-related"
 };
 
 const EMPTY: SellFields = {
   photos: [], category: null, title: '', price: '', condition: 'used', description: '',
-  city: SAMPLE_PROFILE.city, fitsBrand: '', fitsModel: '', confirmed: false,
+  city: SAMPLE_PROFILE.city, confirmed: false,
 };
 
 // The sell form's state: every field, a setter, whether it's ready to publish, and the
@@ -37,9 +35,6 @@ export function useSellDraft() {
 
   const toDraft = (): ListingDraft => {
     const category = fields.category ?? 'parts';
-    const brand = fields.fitsBrand.trim();
-    const model = fields.fitsModel.trim();
-    const hasFit = categoryById(category).fits && brand && model;
     return {
       title: fields.title.trim(),
       description: fields.description.trim(),
@@ -49,7 +44,6 @@ export function useSellDraft() {
       photos: fields.photos,
       city: fields.city,
       seller: ME,
-      fits: hasFit ? [{ brand, model }] : undefined,
     };
   };
 

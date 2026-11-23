@@ -8,9 +8,6 @@ export type Condition = 'new' | 'likeNew' | 'used' | 'forParts';
 // it). Rejected = not car-related, not shown.
 export type ListingStatus = 'live' | 'review' | 'rejected';
 
-// A car a part fits: brand and model code ("BMW" "E46"), optional years.
-export type Fitment = { brand: string; model: string; years?: string };
-
 export type Listing = {
   id: string;
   title: string; // written by the seller, everything important up front ("AUDI A6 2018…")
@@ -22,7 +19,6 @@ export type Listing = {
   city: string;
   minutesAgo: number;
   seller: FeedAuthor;
-  fits?: Fitment[];
   status: ListingStatus;
   reason?: string; // why it's under review / not allowed
   saves: number;

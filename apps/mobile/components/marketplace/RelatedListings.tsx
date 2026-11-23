@@ -11,7 +11,7 @@ const CARD = sizes.chatPhoto * 0.7;
 const LOADING_CARDS = 3;
 const RELATED = 6;
 
-// "Related listings": a sideways row of listings like this one (same car it fits, same
+// "Related listings": a sideways row of listings like this one (same
 // brand, same category). Grey blocks while they load; nothing when there are none.
 export function RelatedListings({ listing }: { listing: Listing }) {
   const styles = useStyles();

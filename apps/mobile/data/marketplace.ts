@@ -20,14 +20,14 @@ export const SAMPLE_LISTINGS: Listing[] = [
   l({
     id: 'l2', title: 'FELNE BBS CH-R 18" 5x120', category: 'wheels', price: 1450,
     condition: 'used', photos: [photo(IMG.m3)], city: 'Peja', minutesAgo: 90,
-    seller: wheelHouse, saves: 27, fits: [{ brand: 'BMW', model: 'E46' }, { brand: 'BMW', model: 'E90' }],
+    seller: wheelHouse, saves: 27,
     description:
       'Kompleti 4 copë, të restauruara në të zezë mat. 18 x 8.5", ET35. Pa plasaritje, të drejta në balancim. Për BMW E46 dhe E90.',
   }),
   l({
     id: 'l3', title: 'AMORTIZERË KW V3 PËR BMW E46', category: 'parts', price: 950,
     condition: 'used', photos: [photo(IMG.m4)], city: 'Ferizaj', minutesAgo: 200,
-    seller: blendi, saves: 18, fits: [{ brand: 'BMW', model: 'E46', years: '1998–2006' }],
+    seller: blendi, saves: 18,
     description:
       'Dy sezona në rrugë, asnjë rrjedhje. Vijnë me çelësat për rregullim të lartësisë. Numri i pjesës: 35220022.',
   }),
@@ -35,7 +35,6 @@ export const SAMPLE_LISTINGS: Listing[] = [
     id: 'l4', title: 'FRENA BREMBO GT PARA, 6 PISTONA, TË REJA', category: 'parts', price: 1800,
     condition: 'new', photos: [photo(IMG.m5)], city: 'Prizren', minutesAgo: 400,
     seller: tuneGarage, saves: 33,
-    fits: [{ brand: 'BMW', model: 'E90' }, { brand: 'BMW', model: 'F82', years: 'M4' }],
     description:
       'Kaliperë me 6 pistona, disqe 380 mm, gypat të përfshirë. Të reja në kuti. Montimi mundet edhe te servisi ynë.',
   }),
@@ -49,7 +48,7 @@ export const SAMPLE_LISTINGS: Listing[] = [
   l({
     id: 'l6', title: 'KAPAKË PASQYRASH KARBON M PERFORMANCE, M4 F82', category: 'accessories',
     price: 260, condition: 'likeNew', photos: [photo(IMG.m4Orange)], city: 'Ferizaj',
-    minutesAgo: 900, seller: ardit, saves: 12, fits: [{ brand: 'BMW', model: 'F82', years: 'M4' }],
+    minutesAgo: 900, seller: ardit, saves: 12,
     description: 'Origjinale BMW, të montuara vetëm një muaj. Vijnë me kapëset.',
   }),
   l({
@@ -83,7 +82,6 @@ export const SAMPLE_LISTINGS: Listing[] = [
     id: 'l12', title: 'SHKARKIM AKRAPOVIČ TITAN PËR AUDI RS6 C7', category: 'parts',
     price: 3900, condition: 'used', photos: [photo(IMG.aventador)], city: 'Prishtina',
     minutesAgo: 4000, seller: kushtrim, saves: 31,
-    fits: [{ brand: 'Audi', model: 'RS6', years: 'C7 2013–2018' }],
     description: 'Titan, me valvula. 15.000 km, pa asnjë gropë a gërvishtje.',
   }),
 ];

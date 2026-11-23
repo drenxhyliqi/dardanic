@@ -32,7 +32,7 @@ const CAR = words([
 export function checkListing(draft: ListingDraft): { status: ListingStatus; reason?: string } {
   const text = `${draft.title} ${draft.description}`;
   if (NOT_CAR.test(text)) return { status: 'rejected', reason: strings.marketplace.notCarReason };
-  const strongCategory = draft.category === 'cars' || Boolean(draft.fits?.length);
+  const strongCategory = draft.category === 'cars';
   if (strongCategory || CAR.test(text)) return { status: 'live' };
   return { status: 'review', reason: strings.marketplace.reviewReason };
 }

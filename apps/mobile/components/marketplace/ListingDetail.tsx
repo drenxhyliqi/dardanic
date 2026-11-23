@@ -11,7 +11,6 @@ import { withCommas } from '../../utils/text';
 import { IconButton } from '../ui/IconButton';
 import { Tag } from '../ui/Tag';
 import { ListingBar } from './ListingBar';
-import { ListingFits } from './ListingFits';
 import { ListingGallery } from './ListingGallery';
 import { SafetyTips } from './SafetyTips';
 import { FindSimilarButton } from './FindSimilarButton';
@@ -24,7 +23,7 @@ import { StatusNotice } from './StatusNotice';
 const t = strings.marketplace;
 
 // A listing's full page: photos, the seller's title as the headline with the price
-// under it, condition and category, what it fits (your cars highlighted), the
+// under it, condition and category, the
 // description (all details, in the seller's words), safety tips, the seller and their
 // city, related listings and Hide listing, with Message seller / Save / Share at the
 // bottom. On your own listing, a notice says if it's under review or not allowed.
@@ -56,11 +55,6 @@ export function ListingDetail({ listing, mine }: { listing: Listing; mine: boole
               </Text>
             </View>
           </View>
-          {listing.fits && listing.fits.length > 0 && (
-            <Section title={t.fits}>
-              <ListingFits fits={listing.fits} />
-            </Section>
-          )}
           <Section title={t.description}>
             <Text style={styles.body}>{listing.description}</Text>
           </Section>
