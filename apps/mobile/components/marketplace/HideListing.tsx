@@ -4,13 +4,15 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useMarketplace } from '../../context/MarketplaceContext';
 import { strings } from '../../i18n';
 import { makeStyles, spacing, typography } from '../../theme';
+import { openReport } from '../report/openReport';
 import { Button } from '../ui/Button';
 
 const t = strings.marketplace;
 
-// At the end of someone else's listing: "Hide listing" with a line saying what it does.
-// Hiding takes it out of your Marketplace and related listings, then goes back.
-export function HideListing({ id }: { id: string }) {
+// At the end of someone else's listing: "Hide listing" with a line saying what it does
+// (takes it out of your Marketplace and related listings, then goes back), and
+// "Report listing".
+export function HideListing({ id, seller }: { id: string; seller: string }) {
   const styles = useStyles();
   const { hide } = useMarketplace();
   return (
@@ -27,6 +29,14 @@ export function HideListing({ id }: { id: string }) {
         }}
       />
       <Text style={styles.hint}>{t.hideHint}</Text>
+      <Button
+        label={strings.report.reportListing}
+        icon="flag-outline"
+        variant="secondary"
+        small
+        centered
+        onPress={() => openReport('listing', id, seller)}
+      />
     </View>
   );
 }

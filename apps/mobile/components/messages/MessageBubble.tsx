@@ -7,6 +7,7 @@ import { strings } from '../../i18n';
 import { makeStyles, radius, sizes, spacing, typography } from '../../theme';
 import { FlameIcon } from '../flame/FlameIcon';
 import { Avatar } from '../profile/Avatar';
+import { openReport } from '../report/openReport';
 import { MessageContent } from './MessageContent';
 import { Receipt, type ReceiptStatus } from './Receipt';
 
@@ -56,7 +57,11 @@ export const MessageBubble = memo(function MessageBubble(props: MessageBubblePro
       )}
       <View style={[styles.column, mine && styles.columnMine]}>
         {showName && sender && <Text style={styles.name}>{sender.username}</Text>}
-        <Pressable onPress={onTap} accessibilityHint={strings.flame.add}>
+        <Pressable
+          onPress={onTap}
+          onLongPress={mine ? undefined : () => openReport('message', message.id, message.from)}
+          accessibilityHint={strings.flame.add}
+        >
           <MessageContent message={message} mine={mine} first={first} last={last} />
           {flamed && (
             <View style={[styles.flame, mine ? styles.flameMine : styles.flameTheirs]}>

@@ -13,6 +13,7 @@ import { makeStyles, spacing } from '../../theme';
 import { Button } from '../ui/Button';
 import { EmptyState } from '../ui/EmptyState';
 import { useRefreshable } from '../ui/useRefreshable';
+import { openReport } from '../report/openReport';
 import { FollowButton } from './FollowButton';
 import { PrivateNotice } from './PrivateNotice';
 import { ProfileHeader } from './ProfileHeader';
@@ -114,7 +115,7 @@ export function PublicProfile({ person }: { person: FeedAuthor }) {
           block(person);
           findMe.block(person.username);
         }}
-        onReport={() => findMe.report(person.username)}
+        onReport={() => openReport('profile', person.username, person.username)}
       />
     </Animated.ScrollView>
   );

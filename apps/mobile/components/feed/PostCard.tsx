@@ -13,6 +13,8 @@ import { PostCaption } from './PostCaption';
 import { PostHeader } from './PostHeader';
 import { PostMedia } from './PostMedia';
 import { PostText } from './PostText';
+import { ME } from '../../data/myPosts';
+import { openReport } from '../report/openReport';
 
 export type PostCardProps = {
   post: PhotoPost | TextPost;
@@ -35,6 +37,11 @@ export const PostCard = memo(function PostCard({ post }: PostCardProps) {
       <PostHeader
         author={post.author}
         details={[post.car, post.city, strings.feed.timeAgo(post.minutesAgo)].filter(isText)}
+        onMore={
+          post.author.username === ME.username
+            ? undefined
+            : () => openReport('post', post.id, post.author.username)
+        }
       />
       {post.kind === 'photo' ? (
         <>

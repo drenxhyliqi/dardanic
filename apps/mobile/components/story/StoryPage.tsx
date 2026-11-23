@@ -14,6 +14,7 @@ import type { StoryUser } from '../../data/stories';
 import { strings } from '../../i18n';
 import { makeStyles, spacing } from '../../theme';
 import { StoryCaption } from './StoryCaption';
+import { openReport } from '../report/openReport';
 import { OwnStoryControls } from './OwnStoryControls';
 import { StoryFooter } from './StoryFooter';
 import { StoryHeader } from './StoryHeader';
@@ -110,6 +111,7 @@ export const StoryPage = memo(function StoryPage(props: StoryPageProps) {
             avatar={user.avatar}
             time={strings.feed.timeAgo(item.minutesAgo)}
             onClose={onClose}
+            onReport={onDeleteItem ? undefined : () => openReport('story', item.id, user.label)}
           />
         </View>
         <View style={[styles.bottom, { paddingBottom: insets.bottom + spacing.sm }]}>

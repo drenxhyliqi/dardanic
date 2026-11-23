@@ -8,6 +8,8 @@ import { withCommas } from '../../utils/text';
 import { FlameIcon } from '../flame/FlameIcon';
 import { Avatar } from '../profile/Avatar';
 import { CommentName } from './CommentName';
+import { ME } from '../../data/myPosts';
+import { openReport } from '../report/openReport';
 import { CommentText } from './CommentText';
 
 const t = strings.comments;
@@ -23,7 +25,8 @@ export type CommentRowProps = {
 
 // One comment: avatar, name line (tags + time), the text, and underneath "Reply" and
 // "🔥 by author" when the post's author flamed it. A small flame with its count sits
-// on the right. Pinned comments get a "Pinned by author" line on top.
+// on the right. Pinned comments get a "Pinned by author" line on top. Long-press
+// someone else's comment to report it.
 export function CommentRow(props: CommentRowProps) {
   const { comment, isPostAuthor, small, flamed = false, onToggleFlame, onReply } = props;
   const styles = useStyles();
@@ -38,7 +41,15 @@ export function CommentRow(props: CommentRowProps) {
           <Text style={styles.muted}>{t.pinned}</Text>
         </View>
       )}
-      <View style={styles.row}>
+      <Pressable
+        style={styles.row}
+        onLongPress={
+          comment.author.username === ME.username
+            ? undefined
+            : () => openReport('comment', comment.id, comment.author.username)
+        }
+        accessibilityHint={strings.report.titles.comment}
+      >
         <Avatar
           photo={comment.author.photo}
           name={comment.author.name}
@@ -81,7 +92,7 @@ export function CommentRow(props: CommentRowProps) {
             {flames > 0 && <Text style={styles.count}>{withCommas(flames)}</Text>}
           </Pressable>
         )}
-      </View>
+      </Pressable>
     </View>
   );
 }

@@ -72,7 +72,7 @@ export function ListingDetail({ listing, mine }: { listing: Listing; mine: boole
                 <SellerLocation seller={listing.seller} />
               </Section>
               <RelatedListings listing={listing} />
-              <HideListing id={listing.id} />
+              <HideListing id={listing.id} seller={listing.seller.username} />
             </>
           )}
         </View>

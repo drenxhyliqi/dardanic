@@ -1,4 +1,4 @@
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -53,6 +53,14 @@ export function StoryViewer({ startId }: StoryViewerProps) {
 
   const close = useCallback(() => router.back(), []);
   const { offset, dragging, panHandlers } = useSwipeDown(close);
+  // Paused while another screen (e.g. Report) is open on top.
+  const [onTop, setOnTop] = useState(true);
+  useFocusEffect(
+    useCallback(() => {
+      setOnTop(true);
+      return () => setOnTop(false);
+    }, []),
+  );
 
   // Deleted the last photo of your own story: nothing left to show.
   useEffect(() => {
@@ -103,7 +111,7 @@ export function StoryViewer({ startId }: StoryViewerProps) {
           onScroll={onScroll}
           scrollEventThrottle={16}
           onMomentumScrollEnd={onSwipeEnd}
-          extraData={`${current}-${dragging}-${myStory?.items.length ?? 0}`}
+          extraData={`${current}-${dragging}-${onTop}-${myStory?.items.length ?? 0}`}
           windowSize={3}
           renderItem={({ item, index }) => {
             const own = item.id === MY_STORY_ID;
@@ -116,7 +124,7 @@ export function StoryViewer({ startId }: StoryViewerProps) {
                   user={user}
                   width={width}
                   active={index === current}
-                  paused={dragging}
+                  paused={dragging || !onTop}
                   onNextUser={() => goTo(index + 1)}
                   onPrevUser={index > 0 ? () => goTo(index - 1) : undefined}
                   onClose={close}

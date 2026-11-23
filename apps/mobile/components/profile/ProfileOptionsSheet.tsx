@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Modal, Share, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -12,7 +12,7 @@ import { ProfileMenuRow } from './ProfileMenuRow';
 
 const t = strings.profileMenu;
 const OPEN_RATIO = 0.5;
-type View_ = 'menu' | 'about' | 'confirmBlock' | 'reported';
+type View_ = 'menu' | 'about' | 'confirmBlock';
 
 export type ProfileOptionsSheetProps = {
   person: FeedAuthor;
@@ -20,19 +20,24 @@ export type ProfileOptionsSheetProps = {
   onClose: () => void;
   onMessage: () => void;
   onBlock: () => void;
-  onReport: () => void;
+  onReport: () => void; // opens the Report sheet, once this menu has slid away
 };
 
 // The ••• menu on someone's profile: Send message, Share profile, About this account,
-// Block (asks to confirm first) and Report (then says thanks).
+// Block (asks to confirm first) and Report (opens the Report sheet).
 export function ProfileOptionsSheet(props: ProfileOptionsSheetProps) {
   const { person, visible, onClose, onMessage, onBlock, onReport } = props;
   const styles = useStyles();
   const insets = useSafeAreaInsets();
   const [view, setView] = useState<View_>('menu');
+  const reportNext = useRef(false); // open Report after the menu has closed
   const closed = () => {
     setView('menu');
     onClose();
+    if (reportNext.current) {
+      reportNext.current = false;
+      onReport();
+    }
   };
 
   return (
@@ -73,8 +78,8 @@ export function ProfileOptionsSheet(props: ProfileOptionsSheetProps) {
                   icon="flag-outline"
                   label={t.report}
                   onPress={() => {
-                    onReport();
-                    setView('reported');
+                    reportNext.current = true;
+                    sheet.close();
                   }}
                 />
               </>
@@ -101,11 +106,6 @@ export function ProfileOptionsSheet(props: ProfileOptionsSheetProps) {
                   centered
                   onPress={() => setView('menu')}
                 />
-              </View>
-            )}
-            {view === 'reported' && (
-              <View style={styles.confirm}>
-                <Text style={styles.hint}>{t.reported}</Text>
               </View>
             )}
           </View>

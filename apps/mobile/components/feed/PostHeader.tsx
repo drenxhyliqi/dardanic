@@ -9,11 +9,11 @@ import { Avatar } from '../profile/Avatar';
 export type PostHeaderProps = {
   author: FeedAuthor;
   details: string[]; // shown under the username, joined with dots (car, city, time)
+  onMore?: () => void; // ••• (for now: report the post); hidden when missing
 };
 
-// Top of a post: small avatar, username, a quiet line of details, and a ••• menu
-// (the menu does nothing yet).
-export function PostHeader({ author, details }: PostHeaderProps) {
+// Top of a post: small avatar, username, a quiet line of details, and ••• (report).
+export function PostHeader({ author, details, onMore }: PostHeaderProps) {
   const styles = useStyles();
   const colors = useColors();
 
@@ -34,14 +34,17 @@ export function PostHeader({ author, details }: PostHeaderProps) {
           {details.join(' · ')}
         </Text>
       </View>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={strings.feed.post.options}
-        hitSlop={spacing.md}
-        style={({ pressed }) => pressed && styles.pressed}
-      >
-        <Ionicons name="ellipsis-horizontal" size={sizes.icon} color={colors.text} />
-      </Pressable>
+      {onMore && (
+        <Pressable
+          onPress={onMore}
+          accessibilityRole="button"
+          accessibilityLabel={strings.feed.post.options}
+          hitSlop={spacing.md}
+          style={({ pressed }) => pressed && styles.pressed}
+        >
+          <Ionicons name="ellipsis-horizontal" size={sizes.icon} color={colors.text} />
+        </Pressable>
+      )}
     </View>
   );
 }

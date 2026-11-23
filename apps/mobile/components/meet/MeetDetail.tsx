@@ -9,6 +9,8 @@ import { PEOPLE } from '../../data/feedAuthors';
 import { ME } from '../../data/myPosts';
 import { strings } from '../../i18n';
 import { makeStyles, spacing, typography } from '../../theme';
+import { openReport } from '../report/openReport';
+import { Button } from '../ui/Button';
 import { IconButton } from '../ui/IconButton';
 import { LinkRow } from '../ui/LinkRow';
 import { MeetActions } from './MeetActions';
@@ -68,6 +70,14 @@ export function MeetDetail({ meet }: { meet: MeetPost }) {
               onPress={() => hostProfile && router.push(`/user/${hostProfile.username}`)}
             />
           </Section>
+          <Button
+            label={strings.report.reportMeet}
+            icon="flag-outline"
+            variant="secondary"
+            small
+            centered
+            onPress={() => openReport('meet', meet.id, meet.author.username)}
+          />
         </View>
       </ScrollView>
       <View style={[styles.back, { top: insets.top + spacing.sm }]}>
