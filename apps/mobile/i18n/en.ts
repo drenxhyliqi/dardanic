@@ -1,5 +1,9 @@
 // All English (en) text in the app. Screens read text from here, never type it directly.
+// The long legal texts live in ./legal and are added here as `legalDocs`.
+import { legalDocs } from './legal';
+
 export const en = {
+  legalDocs,
   welcome: {
     tagline:
       'The home of car culture in Kosovo and the Albanian diaspora. Show off your digital garage, join meets and events, and discover trusted automotive businesses.',
@@ -86,6 +90,8 @@ export const en = {
     privacyTitle: 'Privacy Policy',
     licenseTitle: 'License Agreement',
     comingSoon: 'Coming soon',
+    updated: (date: string) => `Last updated ${date}`,
+    draftNote: 'Draft: to be reviewed before launch.',
   },
   tabs: {
     feed: 'Feed',

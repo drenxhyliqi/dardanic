@@ -1,8 +1,7 @@
-import { PlaceholderPage } from '../components/PlaceholderPage';
+import { LegalPage } from '../components/legal/LegalPage';
 import { strings } from '../i18n';
 
-// Community Guidelines (from Settings and the sign-up agreement). The real text comes
-// with the legal pages step.
+// Community Guidelines (from sign-up and Settings).
 export default function GuidelinesScreen() {
-  return <PlaceholderPage title={strings.settings.guidelines} />;
+  return <LegalPage doc={strings.legalDocs.guidelines} />;
 }
