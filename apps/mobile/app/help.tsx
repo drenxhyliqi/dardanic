@@ -1,4 +1,4 @@
-import { Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, Linking, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { LinkRow } from '../components/ui/LinkRow';
 import { SUPPORT_EMAIL } from '../config/app';
@@ -6,9 +6,15 @@ import { strings } from '../i18n';
 import { makeStyles, radius, spacing, typography } from '../theme';
 
 const t = strings.settings;
-const mail = (subject?: string) => {
+// Opens the phone's email app with our address (and a subject). Without an email app
+// (e.g. the iOS Simulator, or Mail deleted), it shows the address instead.
+const mail = async (subject?: string) => {
   const query = subject ? `?subject=${encodeURIComponent(subject)}` : '';
-  Linking.openURL(`mailto:${SUPPORT_EMAIL}${query}`);
+  try {
+    await Linking.openURL(`mailto:${SUPPORT_EMAIL}${query}`);
+  } catch {
+    Alert.alert(t.noMailTitle, t.noMailText(SUPPORT_EMAIL));
+  }
 };
 
 // Settings → Help & support: email us, report a problem, and how to report people or

@@ -28,7 +28,7 @@ export function CameraPermission({ canAsk, onAllow, onGallery }: CameraPermissio
           label={canAsk ? t.allowCamera : t.openSettings}
           small
           centered
-          onPress={canAsk ? onAllow : () => Linking.openSettings()}
+          onPress={canAsk ? onAllow : () => Linking.openSettings().catch(() => {})}
         />
         <Button label={t.orGallery} variant="secondary" small centered onPress={onGallery} />
       </View>

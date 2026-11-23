@@ -771,6 +771,8 @@ export const en = {
     deleteReasonTitle: 'Why are you leaving? (optional)',
     deleteReasons: [
       'I don’t use it anymore',
+    noMailTitle: 'No email app found',
+    noMailText: (email: string) => `Write to us at ${email} from any email app or website.`,
       'Privacy concerns',
       'Too many notifications',
       'I have another account',
