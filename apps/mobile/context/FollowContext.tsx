@@ -10,6 +10,7 @@ type FollowValue = {
   followsYou: (person: FeedAuthor) => boolean;
   addFollowers: (usernames: string[]) => void; // e.g. from "started following you"
   isBlocked: (person: FeedAuthor) => boolean;
+  blockedPeople: FeedAuthor[]; // for Settings → Blocked accounts, newest first
   block: (person: FeedAuthor) => void; // also unfollows, both ways
   unblock: (person: FeedAuthor) => void;
   toggle: (person: FeedAuthor) => void; // follow / unfollow / request / cancel request
@@ -42,17 +43,22 @@ export function FollowProvider({ children }: { children: ReactNode }) {
     () => new Set(PEOPLE.filter((p) => p.followsYou).map((p) => p.username)),
   );
 
-  const [blocked, setBlocked] = useState<ReadonlySet<string>>(new Set());
+  // Who you've blocked (kept as people so Settings can list them).
+  const [blocked, setBlocked] = useState<ReadonlyMap<string, FeedAuthor>>(new Map());
 
   const block = useCallback((person: FeedAuthor) => {
     const name = person.username;
-    setBlocked((set) => new Set(set).add(name));
+    setBlocked((map) => new Map([[name, person], ...map]));
     setFollowing((set) => without(set, name));
     setRequested((set) => without(set, name));
     setFollowers((set) => without(set, name));
   }, []);
   const unblock = useCallback((person: FeedAuthor) => {
-    setBlocked((set) => without(set, person.username));
+    setBlocked((map) => {
+      const next = new Map(map);
+      next.delete(person.username);
+      return next;
+    });
   }, []);
 
   const addFollowers = useCallback((usernames: string[]) => {
@@ -95,6 +101,7 @@ export function FollowProvider({ children }: { children: ReactNode }) {
       followsYou,
       addFollowers,
       isBlocked: (person) => blocked.has(person.username),
+      blockedPeople: [...blocked.values()],
       block,
       unblock,
       toggle,

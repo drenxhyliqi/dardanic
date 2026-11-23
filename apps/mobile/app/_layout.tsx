@@ -70,6 +70,10 @@ function AppShell() {
         <Stack.Screen name="terms" options={withBackBar} />
         <Stack.Screen name="privacy" options={withBackBar} />
         <Stack.Screen name="license" options={withBackBar} />
+        <Stack.Screen name="guidelines" options={withBackBar} />
+        <Stack.Screen name="blocked" options={titled(strings.settings.blockedTitle)} />
+        <Stack.Screen name="help" options={titled(strings.settings.helpTitle)} />
+        <Stack.Screen name="delete-account" options={titled(strings.settings.deleteTitle)} />
         <Stack.Screen name="(tabs)" options={{ animation: 'fade' }} />
         <Stack.Screen
           name="create/index"
