@@ -32,14 +32,11 @@ export default function TabsLayout() {
             ),
           }}
         />
+        {/* Hidden for the first store release (no real content yet; Apple rejects
+            placeholder screens). Bring the button back once the map is built. */}
         <Tabs.Screen
           name="map"
-          options={{
-            title: t.map,
-            tabBarIcon: ({ focused }) => (
-              <TabIcon focused={focused} icon="map" iconOutline="map-outline" />
-            ),
-          }}
+          options={{ title: t.map, tabBarItemStyle: { display: 'none' } }}
         />
         <Tabs.Screen
           name="marketplace"
