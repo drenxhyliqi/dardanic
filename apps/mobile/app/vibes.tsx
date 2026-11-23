@@ -14,6 +14,7 @@ import { useOnboarding } from '../context/OnboardingContext';
 import { strings } from '../i18n';
 import { makeStyles, spacing, typography } from '../theme';
 import { simplify } from '../utils/text';
+import { THEME_TOGGLE_ROOM } from '../components/settings/SignupThemeToggle';
 
 const t = strings.vibes;
 
@@ -113,6 +114,7 @@ const useStyles = makeStyles((colors) =>
       flexDirection: 'row',
       alignItems: 'flex-start',
       gap: spacing.lg,
+      paddingRight: THEME_TOGGLE_ROOM - spacing.sm, // room for the sun / moon button
     },
     headingText: {
       flex: 1,

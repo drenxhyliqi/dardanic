@@ -8,6 +8,7 @@ import { LaunchScreen } from '../components/launch/LaunchScreen';
 import { AppProviders } from '../context/AppProviders';
 import { strings } from '../i18n';
 import { fontFiles, ThemeProvider, useTheme } from '../theme';
+import { SignupThemeToggle } from '../components/settings/SignupThemeToggle';
 
 // Keep the native splash (D logo) up until our launch animation takes over.
 SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -166,3 +167,4 @@ function AppShell() {
     </AppProviders>
   );
 }
+      <SignupThemeToggle />

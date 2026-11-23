@@ -13,6 +13,7 @@ import { Heading } from '../components/ui/Heading';
 import { INTRO_BUILDS, INTRO_PEOPLE, INTRO_PLACES, toColumns } from '../data/intro';
 import { strings } from '../i18n';
 import { makeStyles, spacing, typography } from '../theme';
+import { ThemeToggleButton } from '../components/settings/SignupThemeToggle';
 
 const t = strings.intro;
 const FADE_MS = 400;
@@ -57,9 +58,12 @@ export default function IntroScreen() {
       <SafeAreaView style={styles.safe}>
         <View style={styles.topBar}>
           <IntroProgress current={step} total={total} />
-          <Pressable onPress={enterApp} accessibilityRole="button" hitSlop={spacing.md}>
-            <Text style={styles.skip}>{t.skip}</Text>
-          </Pressable>
+          <View style={styles.topActions}>
+            <ThemeToggleButton />
+            <Pressable onPress={enterApp} accessibilityRole="button" hitSlop={spacing.md}>
+              <Text style={styles.skip}>{t.skip}</Text>
+            </Pressable>
+          </View>
         </View>
 
         <Animated.View style={[styles.text, { opacity: fade }]}>
@@ -90,6 +94,8 @@ const useStyles = makeStyles((colors) =>
       justifyContent: 'space-between',
       paddingVertical: spacing.md,
     },
+    // The sun / moon button, then Skip, in one line on the right.
+    topActions: { flexDirection: 'row', alignItems: 'center', gap: spacing.lg },
     skip: {
       ...typography.link,
       color: colors.text,
