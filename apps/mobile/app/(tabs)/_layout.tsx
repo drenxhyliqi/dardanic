@@ -10,8 +10,9 @@ import { strings } from '../../i18n';
 const t = strings.tabs;
 const DOT = ''; // an empty badge is drawn as a small dot (FloatingTabBar)
 
-// The main app bottom bar: Feed, Map, Marketplace, Messages, Profile, shown as a floating
-// capsule (FloatingTabBar). Icons only; the titles are still read out by screen readers.
+// The main app bottom bar: Feed, Search, Marketplace, Messages, Profile (Map is hidden
+// for now), shown as a floating capsule (FloatingTabBar). Icons only; the titles are
+// still read out by screen readers.
 // ScrollCollapseProvider lets the Feed shrink the bottom bar while scrolling. Messages
 // shows a red count of unread messages, Marketplace a red dot for new listings.
 export default function TabsLayout() {
@@ -29,6 +30,15 @@ export default function TabsLayout() {
             title: t.feed,
             tabBarIcon: ({ focused }) => (
               <TabIcon focused={focused} icon="home" iconOutline="home-outline" />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="search"
+          options={{
+            title: t.search,
+            tabBarIcon: ({ focused }) => (
+              <TabIcon focused={focused} icon="search" iconOutline="search-outline" />
             ),
           }}
         />
@@ -57,12 +67,6 @@ export default function TabsLayout() {
               <TabIcon focused={focused} icon="paper-plane" iconOutline="paper-plane-outline" />
             ),
           }}
-        />
-        {/* Reachable (from 🔍 on the Feed) but without a button in the bar. Not `href: null`:
-            in this Expo Router version that makes the route unreachable. */}
-        <Tabs.Screen
-          name="search"
-          options={{ title: t.search, tabBarItemStyle: { display: 'none' } }}
         />
         <Tabs.Screen
           name="profile"

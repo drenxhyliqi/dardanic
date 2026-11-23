@@ -52,8 +52,8 @@ export type FeedHeaderProps = {
 
 // Top bar of the Feed: + (create) on the left, the full logo with a ▾ in the middle
 // (opens the For you / Following / Crews menu), search and notifications on the right.
-// Search opens Search & Explore (with the way into FindMe); the bell opens
-// notifications and shows a red dot when something is unread.
+// The bell opens notifications and shows a red dot when something is unread. (Search &
+// Explore is its own tab in the bottom bar.)
 export function FeedHeader({ filter, onChangeFilter }: FeedHeaderProps) {
   const styles = useStyles();
   const colors = useColors();
@@ -88,7 +88,6 @@ export function FeedHeader({ filter, onChangeFilter }: FeedHeaderProps) {
       </View>
 
       <View style={styles.actions}>
-        <HeaderIcon icon="search-outline" label={t.search} onPress={() => router.push('/search')} />
         <HeaderIcon
           icon="notifications-outline"
           label={t.notifications}
