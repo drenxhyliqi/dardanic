@@ -9,6 +9,10 @@ export type OnboardingProfile = {
   photo: string | null;
   banner: string | null;
   vibes: string[]; // vibe ids
+  signIn: 'apple' | 'google' | 'email' | 'phone' | null; // how they signed up
+  contact: string; // their email or phone number (email / phone sign-up)
+  birthDate: string | null; // YYYY-MM-DD, never shown on the profile
+  acceptedTerms: boolean; // Terms + Community Guidelines, ticked at sign-up
 };
 
 type OnboardingValue = OnboardingProfile & {
@@ -23,6 +27,10 @@ const EMPTY: OnboardingProfile = {
   photo: null,
   banner: null,
   vibes: [],
+  signIn: null,
+  contact: '',
+  birthDate: null,
+  acceptedTerms: false,
 };
 
 const OnboardingContext = createContext<OnboardingValue | null>(null);
