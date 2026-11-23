@@ -25,11 +25,12 @@ type ThemeValue = {
 const STORAGE_KEY = 'dardanic.theme';
 const ThemeContext = createContext<ThemeValue | null>(null);
 
-// Knows which theme to show: the user's choice from Settings (Light / Dark), or the
-// phone's own setting (Automatic, the default). The choice is saved on the phone.
+// Knows which theme to show: Dark by default, or the user's choice (the sign-up switch,
+// or Settings: Light / Dark / Automatic = the phone's own setting). The choice is saved
+// on the phone.
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const system = useColorScheme();
-  const [preference, setPreferenceState] = useState<ThemePreference>('system');
+  const [preference, setPreferenceState] = useState<ThemePreference>('dark'); // default
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -42,7 +43,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const value = useMemo<ThemeValue>(() => {
-    const scheme: Scheme = preference === 'system' ? (system === 'light' ? 'light' : 'dark') : preference;
+    const scheme: Scheme =
+      preference === 'system' ? (system === 'light' ? 'light' : 'dark') : preference;
     return {
       colors: scheme === 'light' ? lightColors : darkColors,
       scheme,
