@@ -149,12 +149,12 @@ function AppShell() {
           }}
         />
         {/* See-through, so the feed shows behind a story while you drag it down. */}
+        {/* The story camera slides in from the left (swipe right on the Feed). */}
         <Stack.Screen
           name="story/new"
           options={{ animation: 'slide_from_left', gestureEnabled: false }}
         />
         <Stack.Screen
-        {/* The story camera slides in from the left (swipe right on the Feed). */}
           name="story/[id]"
           options={{
             presentation: 'transparentModal',
@@ -168,7 +168,7 @@ function AppShell() {
           options={{ headerShown: true, title: strings.settings.title }}
         />
       </Stack>
+      <SignupThemeToggle />
     </AppProviders>
   );
 }
-      <SignupThemeToggle />
