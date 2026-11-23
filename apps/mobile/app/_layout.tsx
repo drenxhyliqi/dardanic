@@ -146,9 +146,10 @@ function AppShell() {
         {/* See-through, so the feed shows behind a story while you drag it down. */}
         <Stack.Screen
           name="story/new"
-          options={{ presentation: 'fullScreenModal', gestureEnabled: false }}
+          options={{ animation: 'slide_from_left', gestureEnabled: false }}
         />
         <Stack.Screen
+        {/* The story camera slides in from the left (swipe right on the Feed). */}
           name="story/[id]"
           options={{
             presentation: 'transparentModal',

@@ -11,6 +11,7 @@ import { CameraPermission } from './CameraPermission';
 import { RecordingTimer } from './RecordingTimer';
 import { ShutterButton } from './ShutterButton';
 import { useStoryRecorder } from './useStoryRecorder';
+import { useSwipeToClose } from './useSwipeToClose';
 
 const t = strings.story;
 const PROBLEM_MS = 4000;
@@ -33,6 +34,7 @@ export function CameraCapture({ onCaptured, onClose }: CameraCaptureProps) {
   const [unavailable, setUnavailable] = useState(false); // e.g. the iOS Simulator
   const [problem, setProblem] = useState<string | null>(null); // shown for a few seconds
   const recorder = useStoryRecorder(camera, onCaptured, useCallback(setProblem, []));
+  const swipeToClose = useSwipeToClose(onClose);
 
   useEffect(() => {
     if (!problem) return;
@@ -49,7 +51,7 @@ export function CameraCapture({ onCaptured, onClose }: CameraCaptureProps) {
   const flip = () => setFacing((side) => (side === 'back' ? 'front' : 'back'));
 
   return (
-    <View style={styles.screen}>
+    <View style={styles.screen} {...swipeToClose}>
       {allowed && (
         <CameraView
           ref={camera}

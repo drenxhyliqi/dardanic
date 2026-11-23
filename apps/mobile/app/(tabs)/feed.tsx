@@ -5,24 +5,27 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FEED_BAR_HEIGHT, FeedHeader } from '../../components/feed/FeedHeader';
 import { FeedList } from '../../components/feed/FeedList';
 import type { FeedFilter } from '../../components/feed/feedFilters';
+import { useSwipeToCamera } from '../../components/feed/useSwipeToCamera';
 import { useCollapseOnScroll } from '../../components/tabs/useCollapseOnScroll';
 import { makeStyles } from '../../theme';
 
 // The Feed tab: the scrolling feed (stories + posts) with the top bar floating over it.
 // Scrolling down slides the top bar away (and shrinks the bottom bar); a small scroll up
 // brings both back. A solid strip behind the status bar keeps the clock readable.
-// The filter (Your vibes / Near you / Meetings) decides which posts show.
+// The filter (Your vibes / Near you / Meetings) decides which posts show. Swiping from
+// the left edge to the right opens the story camera.
 export default function FeedScreen() {
   const styles = useStyles();
   const insets = useSafeAreaInsets();
   const [filter, setFilter] = useState<FeedFilter>('vibes');
   const { collapse, onScroll } = useCollapseOnScroll(FEED_BAR_HEIGHT);
+  const swipeToCamera = useSwipeToCamera();
 
   const slide = collapse.interpolate({ inputRange: [0, 1], outputRange: [0, -FEED_BAR_HEIGHT] });
   const fade = collapse.interpolate({ inputRange: [0, 1], outputRange: [1, 0] });
 
   return (
-    <View style={styles.screen}>
+    <View style={styles.screen} {...swipeToCamera}>
       <FeedList
         filter={filter}
         topInset={insets.top + FEED_BAR_HEIGHT}
