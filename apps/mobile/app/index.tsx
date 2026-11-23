@@ -1,7 +1,8 @@
 import { Animated, StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Heading } from '../components/ui/Heading';
+import { IconButton } from '../components/ui/IconButton';
 import { AuthActions } from '../components/welcome/AuthActions';
 import { LegalNotice } from '../components/welcome/LegalNotice';
 import { useIntroAnimation } from '../components/welcome/useIntroAnimation';
@@ -16,16 +17,29 @@ const logoWordmark = require('../assets/brand/logo-wordmark.png');
 const WORDMARK_RATIO = 1200 / 94;
 
 // The first screen people see: photo, logo, what DARDANIC is, and how to get in.
-// Tapping "Create account" swaps the logo for a heading and shows the sign-up options.
+// Tapping "Create account" swaps the logo for a heading and shows the sign-up options,
+// with a back button at the top left.
 export default function WelcomeScreen() {
   const colors = useColors();
   const styles = useStyles();
   const { imageStyle, logoStyle, contentStyle } = useIntroAnimation();
   const { mode, switchTo, fadeStyle } = useModeSwitch();
+  const insets = useSafeAreaInsets();
 
   return (
     <View style={styles.screen}>
       <WelcomeImage style={imageStyle} />
+      {mode === 'signup' && (
+        // Back to the first welcome view, top left like every other page's back button.
+        <Animated.View style={[styles.back, { top: insets.top + spacing.sm }, fadeStyle]}>
+          <IconButton
+            icon="chevron-back"
+            label={strings.auth.back}
+            round
+            onPress={() => switchTo('start')}
+          />
+        </Animated.View>
+      )}
       <SafeAreaView style={styles.safe}>
         <Animated.View style={[styles.intro, fadeStyle]}>
           {mode === 'start' ? (
@@ -87,6 +101,11 @@ const useStyles = makeStyles((colors) =>
     },
     bottom: {
       gap: spacing.xl,
+    },
+    back: {
+      position: 'absolute',
+      left: spacing.lg,
+      zIndex: 1,
     },
   }),
 );

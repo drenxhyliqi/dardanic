@@ -1,9 +1,8 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { strings } from '../../i18n';
-import { makeStyles, sizes, spacing, typography, useColors } from '../../theme';
+import { makeStyles, spacing, typography } from '../../theme';
 import { AuthOptions } from '../auth/AuthOptions';
 import { Button } from '../ui/Button';
 import { TextLink } from '../ui/TextLink';
@@ -20,7 +19,6 @@ const goToLogin = () => router.push('/login');
 // (AuthOptions); every way then asks for the date of birth and the terms.
 export function AuthActions({ mode, onChangeMode }: AuthActionsProps) {
   const styles = useStyles();
-  const colors = useColors();
   if (mode === 'start') {
     return (
       <View style={styles.group}>
@@ -37,15 +35,6 @@ export function AuthActions({ mode, onChangeMode }: AuthActionsProps) {
 
   return (
     <View style={styles.group}>
-      <Pressable
-        accessibilityRole="button"
-        onPress={() => onChangeMode('start')}
-        style={styles.back}
-        hitSlop={spacing.sm}
-      >
-        <Ionicons name="arrow-back" size={sizes.icon - 4} color={colors.textMuted} />
-        <Text style={styles.backLabel}>{strings.auth.back}</Text>
-      </Pressable>
       <AuthOptions intent="signup" />
       <Text style={styles.prompt}>
         {strings.auth.haveAccountPrompt}
@@ -59,17 +48,6 @@ const useStyles = makeStyles((colors) =>
   StyleSheet.create({
     group: {
       gap: spacing.md,
-    },
-    back: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      alignSelf: 'flex-start',
-      gap: spacing.xs,
-      paddingVertical: spacing.xs,
-    },
-    backLabel: {
-      ...typography.small,
-      color: colors.textMuted,
     },
     prompt: {
       ...typography.paragraph,
