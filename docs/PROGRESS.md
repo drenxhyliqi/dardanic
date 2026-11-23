@@ -13,13 +13,14 @@
 - Create sheet (Post / Build / Meeting / Crew) with placeholder pages. All demo content in Albanian; autocorrect off.
 
 ## Next steps
-1. Store requirements (Apple + Google): account deletion, report content (posts, comments, stories, listings, people), block list, settings (account, privacy, notifications), privacy policy + terms content, Sign in with Apple if other social logins, age gate 18+ for FindMe, permission texts.
+1. Store requirements: done as UI (delete account, report everywhere, blocked accounts, settings, sign-in with Apple/Google/email/phone codes, 16+ birthday + terms at sign-up, FindMe 18+, legal page drafts, Map hidden). Left for the backend: real deletion, moderation queue, notification settings.
 2. Create flows: New post, New build, New meeting, New crew; crew pages; business profiles; edit profile.
 3. Error / offline states on every screen; service layer (mock) for feed, comments, messages, stories, meets, profiles.
 4. Data model + RLS plan, auth decision (email code / phone / Apple / Google) → Supabase.
 5. ESLint (ask first). Android pass (pull-to-refresh).
 
 ## Open problems
+- Before launch: fill in the company details in `apps/mobile/config/app.ts` (name, address, registration, support/privacy emails) and have a lawyer review `apps/mobile/i18n/legal/`.
 - Simulator can't record video (handled with a message); test camera, recording and gestures on a phone.
 - The user should confirm the privacy rule: posts visible to followers only; DMs need a mutual follow.
 - Your story, sent messages, listings etc. live in memory only (reset on restart) until the backend.
