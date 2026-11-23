@@ -66,7 +66,14 @@ function AppShell() {
         <Stack.Screen name="intro" options={{ gestureEnabled: false }} />
         <Stack.Screen name="ready" options={{ gestureEnabled: false, animation: 'fade' }} />
         <Stack.Screen name="login" options={withBackBar} />
-        <Stack.Screen name="forgot-password" options={withBackBar} />
+        <Stack.Screen name="auth/email" options={withBackBar} />
+        <Stack.Screen name="auth/phone" options={withBackBar} />
+        <Stack.Screen name="auth/code" options={withBackBar} />
+        {/* The account exists by now: no going back, finish the details. */}
+        <Stack.Screen
+          name="auth/details"
+          options={{ ...withBackBar, headerBackVisible: false, gestureEnabled: false }}
+        />
         <Stack.Screen name="terms" options={withBackBar} />
         <Stack.Screen name="privacy" options={withBackBar} />
         <Stack.Screen name="license" options={withBackBar} />

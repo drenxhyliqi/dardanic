@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { strings } from '../../i18n';
 import { makeStyles, sizes, spacing, typography, useColors } from '../../theme';
+import { AuthOptions } from '../auth/AuthOptions';
 import { Button } from '../ui/Button';
 import { TextLink } from '../ui/TextLink';
 import type { WelcomeMode } from './useModeSwitch';
@@ -14,11 +15,9 @@ export type AuthActionsProps = {
 };
 
 const goToLogin = () => router.push('/login');
-// Sign-up isn't connected yet, so every option pretends it worked and goes to the plan step.
-const finishSignup = () => router.replace('/choose-plan');
 
-// The welcome buttons. "Create account" swaps them for Apple / Google / email.
-// Apple / Google / email aren't connected yet: they skip ahead to the plan step for now.
+// The welcome buttons. "Create account" swaps them for Apple / Google / email / phone
+// (AuthOptions); every way then asks for the date of birth and the terms.
 export function AuthActions({ mode, onChangeMode }: AuthActionsProps) {
   const styles = useStyles();
   const colors = useColors();
@@ -47,24 +46,7 @@ export function AuthActions({ mode, onChangeMode }: AuthActionsProps) {
         <Ionicons name="arrow-back" size={sizes.icon - 4} color={colors.textMuted} />
         <Text style={styles.backLabel}>{strings.auth.back}</Text>
       </Pressable>
-      <Button
-        label={strings.auth.continueApple}
-        variant="light"
-        icon="logo-apple"
-        onPress={finishSignup}
-      />
-      <Button
-        label={strings.auth.continueGoogle}
-        variant="secondary"
-        icon="logo-google"
-        onPress={finishSignup}
-      />
-      <Button
-        label={strings.auth.continueEmail}
-        variant="secondary"
-        icon="mail-outline"
-        onPress={finishSignup}
-      />
+      <AuthOptions intent="signup" />
       <Text style={styles.prompt}>
         {strings.auth.haveAccountPrompt}
         <TextLink label={strings.auth.logIn} onPress={goToLogin} />
